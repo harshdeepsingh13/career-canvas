@@ -1,0 +1,236 @@
+@import "../../App";
+$border-radius: 2px;
+$transition-time: 0.3s;
+
+.inputFields-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  color: white;
+
+  label {
+    text-align: left;
+    color: magenta;
+    width: 100%;
+    font-size: 15px;
+    text-transform: capitalize;
+    border: thin solid #ccc;
+    border-radius: $border-radius;
+    padding: 9px 0;
+    margin-bottom: 10px;
+    line-height: 20px;
+  }
+
+  .field-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin: 5px 0;
+
+    .inputText, .inputEmail, .inputPassword, .inputSubmit, .inputSelect, .inputTextArea, .inputNumber, .inputDate {
+      border-bottom: thin solid magenta;
+      line-height: 30px;
+      width: 100%;
+      transition: $transition-time;
+      box-sizing: border-box;
+    }
+
+    .inputSubmit {
+      line-height: 40px;
+      border: none;
+      border-radius: $border-radius;
+      cursor: pointer;
+      padding: 0;
+      position: relative;
+      text-transform: capitalize;
+      outline: none;
+
+      &.submit-loader {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      &.main-button {
+        background-color: magenta;
+      }
+
+      &.secondary-button {
+        background-color: transparent;
+        border: 3px solid magenta;
+        border-radius: $border-radius + 7px;
+
+        &:hover {
+          background-color: magenta;
+          text-decoration-color: white;
+        }
+      }
+
+      &:hover {
+        background-color: magenta;
+      }
+    }
+
+    .inputText:focus, .inputEmail:focus, .inputPassword:focus, .inputSelect:focus, .inputTextArea:focus, .inputNumber:focus, .inputDate:focus {
+      border-bottom: thin solid magenta;
+    }
+
+    .error {
+      //color: red;
+      font-style: italic;
+      font-size: 13px;
+      width: 100%;
+      text-transform: capitalize;
+      margin: 9px 0;
+      text-align: right;
+    }
+
+    .field {
+      display: flex;
+      width: 100%;
+      align-items: center;
+      justify-content: space-between;
+
+      .icon {
+        //color: $bluey-grey;
+        flex-basis: 5%;
+        pointer-events: none;
+        margin: 0 8px 0 0;
+      }
+
+      .characterCount {
+        color: magenta;
+        font-size: 13px;
+      }
+    }
+
+    .input-container {
+      position: relative;
+      width: 100%;
+
+      /*.inputText, .inputEmail, .inputPassword, .inputSelect, .inputTextArea, .inputNumber, .inputDate {
+        position: relative;
+      }*/
+
+      .inputText:placeholder-shown, .inputEmail:placeholder-shown, .inputPassword:placeholder-shown, .inputSelect:placeholder-shown, .inputTextArea:placeholder-shown, .inputNumber:placeholder-shown, .inputDate:placeholder-shown {
+        //position: relative;
+        + {
+          .field-label {
+            visibility: hidden;
+            z-index: -1;
+          }
+        }
+      }
+
+      .inputText:not(:placeholder-shown), .inputEmail:not(:placeholder-shown), .inputPassword:not(:placeholder-shown), .inputSelect:not(:placeholder-shown), .inputTextArea:not(:placeholder-shown), .inputNumber:not(:placeholder-shown), .inputDate:not(:placeholder-shown) {
+        //position: relative;
+        + {
+          .field-label {
+            visibility: visible;
+            z-index: 1;
+            opacity: 1;
+            transform: translateY(-18px);
+          }
+        }
+      }
+
+      .field-label {
+        display: block;
+        position: absolute;
+        padding: unset;
+        margin: unset;
+        opacity: 0;
+        top: 15px;
+        border: unset;
+        text-transform: unset;
+        color: magenta;
+        transition: all 0.5s ease-out;
+        font-size: 12px;
+      }
+    }
+
+    .label-container {
+      border: thin solid rgba(204, 204, 204, 0.55);
+      border-radius: $border-radius;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      width: 50%;
+
+      .label {
+        border: none;
+        text-align: center;
+        color: magenta;
+        width: 100%;
+        font-size: 15px;
+        line-height: 20px;
+      }
+
+      .toggle {
+        position: relative;
+        display: inline-block;
+        //width: 70px;
+        //height: 34px;
+        padding: 10px;
+        box-sizing: border-box;
+
+        input {
+          opacity: 0;
+          width: 0;
+          height: 0;
+        }
+
+        .slider {
+          position: absolute;
+          cursor: pointer;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          width: 70px;
+          height: 34px;
+          background-color: #ccc;
+          -webkit-transition: .4s;
+          transition: .4s;
+          margin: auto;
+        }
+
+        .slider:before {
+          position: absolute;
+          content: "";
+          height: 26px;
+          width: 26px;
+          left: 10px;
+          bottom: 4px;
+          background-color: white;
+          -webkit-transition: .4s;
+          transition: .4s;
+        }
+
+        .slider.round {
+          border-radius: 34px;
+        }
+
+        .slider.round:before {
+          border-radius: 50%;
+        }
+
+        input:checked + .slider {
+          background-color: magenta;
+        }
+
+        input:focus + .slider {
+          box-shadow: 0 0 1px magenta;
+        }
+
+        input:checked + .slider:before {
+          -webkit-transform: translateX(26px);
+          -ms-transform: translateX(26px);
+          transform: translateX(26px);
+        }
+
+      }
+    }
+  }
+}
