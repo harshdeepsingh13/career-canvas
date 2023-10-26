@@ -12,41 +12,42 @@ import {ROUTES} from "../../config/routes";
 
 const RouteWrapper = ({children, isPrivate, header, footer, headerOptions}) => {
 
-  const {isAuthorized} = useAuthenticationContext();
+    const {isAuthorized} = useAuthenticationContext();
 
-  return <>
-    {header && <Header options={headerOptions}/>}
-    {
-      isPrivate ?
-        <>
-          {isAuthorized ? <PrivateRoute>{children}</PrivateRoute> : <Navigate to={ROUTES.LOGIN}/>}
-        </> :
-        <>
-          {/*{!isAuthorized ? <Container>{children}</Container> : <Navigate to={ROUTE_PATHS.INDEX}/>}*/}
-          {!isAuthorized ? children : <Navigate to="/"/>}
-        </>
-    }
-    {footer && <Footer/>}
-  </>
+    return <>
+
+        {header && <Header options={headerOptions}/>}
+        {
+            isPrivate ?
+                <>
+                    {isAuthorized ? <PrivateRoute>{children}</PrivateRoute> : <Navigate to={ROUTES.LOGIN}/>}
+                </> :
+                <>
+                    {/*{!isAuthorized ? <Container>{children}</Container> : <Navigate to={ROUTE_PATHS.INDEX}/>}*/}
+                    {!isAuthorized ? children : <Navigate to="/"/>}
+                </>
+        }
+        {footer && <Footer/>}
+    </>
 };
 
 RouteWrapper.propTypes = {
-  isPrivate: PropTypes.bool,
-  isHeader: PropTypes.bool,
-  headerOptions: PropTypes.object
+    isPrivate: PropTypes.bool,
+    isHeader: PropTypes.bool,
+    headerOptions: PropTypes.object
 };
 RouteWrapper.defaultProps = {
-  isPrivate: false,
-  isHeader: false
+    isPrivate: false,
+    isHeader: false
 };
 
 const PrivateRoute = ({children}) => {
 
-  return <>
-    {/*<Container>*/}
-    {children}
-    {/*</Container>*/}
-  </>
+    return <>
+        {/*<Container>*/}
+        {children}
+        {/*</Container>*/}
+    </>
 }
 
 export default RouteWrapper

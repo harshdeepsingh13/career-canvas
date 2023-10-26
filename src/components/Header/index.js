@@ -4,9 +4,10 @@ import {getToken, removeToken} from "../../services/localStorage";
 import {useNavigate} from "react-router";
 import {HeaderWrapper} from "./styles";
 import {Link, NavLink} from "react-router-dom";
+import {ROUTES} from "../../config/routes";
 
 const navs = [
-  {text: "Build Resume", link: "/build"}, {text: "nav2"}, {text: "nav3"}
+  {text: "Build Resume", link: ROUTES.BUILD}, {text: "Your Details", link: ROUTES.DETAILS}, {text: "nav3"}
 ]
 const Header = props => {
 

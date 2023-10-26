@@ -6,12 +6,20 @@ import {PageViewContainer} from "../../config/globalStyles";
 import Button from "../../components/Button";
 import {checkEmail, checkPassword, validateEmail, validatePassword} from "../../services/helpers";
 import {Link} from "react-router-dom";
-import {ROUTES} from "../../config/routes";
+import {ROUTES as ROUTE_PATH, ROUTES} from "../../config/routes";
+import {useUserContext} from "../../context/UserContextProvider";
+import Loader from "../../components/Loader";
 
 const Login = props => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [emptyFieldsValidation, setEmptyFieldsValidation] = useState([])
+
+    const {state: userState, actions: userActions, loaders: userLoaders} = useUserContext();
+
+    const {loginUser} = userActions;
+    const {registerUserLoader} = userLoaders;
 
     const onEmailChange = (value) => {
         setEmail(value);
@@ -19,12 +27,35 @@ const Login = props => {
     const onPasswordChange = value => {
         setPassword(value);
     }
+
+    const validateData = data => {
+        let isValid = true;
+        let emptyFields = [];
+
+        if (!data?.email) {
+            emptyFields.push("email")
+            isValid = false;
+        }
+        if (!data?.password) {
+            emptyFields.push('password');
+            isValid = false;
+        }
+        setEmptyFieldsValidation(emptyFields)
+        return isValid;
+    }
+
     const onLoginClick = () => {
-      const data = {email, password}
-      // if(validateData(data)){}
+        const data = {email, password}
+        if (validateData(data)) {
+            const successCallback = () => {
+                window.location.href = ROUTE_PATH.INDEX;
+            }
+            loginUser(data, successCallback);
+        }
     }
 
     return <>
+        {registerUserLoader && <Loader/>}
         <PageViewContainer>
             <LoginWrapper>
                 <InputV2

@@ -94,6 +94,7 @@ module.exports = {
         BASE_URL_V1: "/api/v1",
         REGISTER_USER: "/user/register",
         LOGIN_USER: "/user/login",
+        COMPLETE_USER_DETAILS: "/user/completeInformation",
         USER_DETAILS: "/user",
         UPDATE_USER: "/user",
         UPLOAD_AUDIO: "/music",

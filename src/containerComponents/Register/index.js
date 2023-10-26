@@ -7,6 +7,7 @@ import {validateEmail, validatePassword, validatePhoneNumber} from "../../servic
 import {Button} from "react-bootstrap";
 import _ from "lodash";
 import {useUserContext} from "../../context/UserContextProvider";
+import Loader, {LOADER_SIZE} from "../../components/Loader";
 
 const Register = props => {
 
@@ -18,7 +19,9 @@ const Register = props => {
     const [countryCode, setCountryCode] = useState(1);
     const [emptyFieldsValidation, setEmptyFieldsValidation] = useState([])
 
-    const {} = useUserContext();
+    const {state: userState, actions: userActions, loaders: userLoaders} = useUserContext();
+    const {registerUser} = userActions;
+    const {registerUserLoader} = userLoaders;
 
     const validateRePassword = value => {
         if (value !== password) {
@@ -60,10 +63,10 @@ const Register = props => {
         return isValid;
     }
 
-    const onRegisterClick = () => {
-        const data = {name, email, password, rePassword, contactNumber: {countryCode, contactNumber: phoneNumber}}
+    const onRegisterClick = async () => {
+        const data = {name, email, password, contactNumber: {countryCode, contactNumber: phoneNumber}}
         if (validateData(data)) {
-
+            await registerUser(data);
         }
     }
 
@@ -93,6 +96,7 @@ const Register = props => {
     }
 
     return <>
+        {registerUserLoader && <Loader size={LOADER_SIZE.LARGE}/>}
         <PageViewContainer>
             <RegisterWrapper>
                 <InputV2

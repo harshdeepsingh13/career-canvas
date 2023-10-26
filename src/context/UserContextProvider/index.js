@@ -6,9 +6,11 @@ export const UserContext = createContext({});
 
 export const useUserContext = () => useContext(UserContext);
 
+const initState = {userAccountDetails: {}, userCompleteDetails: {}}
+
 const UserContextProvider = ({children}) => {
 
-	const [state, setState] = useState({userDetails: null});
+	const [state, setState] = useState(initState);
 
 	const [registerUserLoader, setRegisterUserLoader] = useState(false);
 	const [fetchUserDetailsLoader, setFetchUserDetailsLoader] = useState(false);

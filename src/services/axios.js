@@ -48,3 +48,5 @@ export const updateDetailsAPI = updateDetails =>
         url: API_ROUTES.UPDATE_USER,
         data: {details: updateDetails}
     })
+
+export const fetchCompleteUserDetailsAPI = () => axiosInstance({method: "GET", url: API_ROUTES.COMPLETE_USER_DETAILS})

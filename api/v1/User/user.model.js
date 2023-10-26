@@ -331,10 +331,10 @@ exports.deleteEducationInformation = (educationId, email) =>
 	);
 
 exports.getCompleteInformation = async email => ({
-	basicInformation: await getBasicInformation(email),
-	educationInformation: await getEducationInformation(email),
-	skillsInformation: await getSkillInformation(email),
-	workExperienceInformation: {workExperienceInformation: {workExperiences: await getWorkExperiences(email)}},
-	trainingInformation: {trainingInformation: {trainings: await getTrainingInformation(email)}},
-	projects: {projectsInformation: {projects: await getProjectInformation(email)}}
+	basicInformation: await this.getBasicInformation(email),
+	educationInformation: await this.getEducationInformation(email),
+	skillsInformation: await this.getSkillInformation(email),
+	workExperienceInformation: {workExperienceInformation: {workExperiences: await this.getWorkExperiences(email)}},
+	trainingInformation: {trainingInformation: {trainings: await this.getTrainingInformation(email)}},
+	projects: {projectsInformation: {projects: await this.getProjectInformation(email)}}
 });

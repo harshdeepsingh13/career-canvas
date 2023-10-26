@@ -7,7 +7,7 @@ export const useAuthenticationContext = () => useContext(AuthenticationContext);
 
 const AuthenticationContextProvider = ({children}) => {
 
-    const isToken = useMemo(() => Boolean(getToken()), []);
+    const isToken = Boolean(getToken());
 
     const [isAuthorized, setIsAuthorized] = useState(isToken);
 

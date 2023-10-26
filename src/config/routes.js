@@ -1,6 +1,7 @@
 import Home from "../containerComponents/Home";
 import Login from "../containerComponents/Login";
 import Register from "../containerComponents/Register";
+import UserInformation from "../containerComponents/UserInformation";
 /*import Templates from "../containerComponents/Templates";
 import Register from "../containerComponents/Register";
 import AllDetails from "../containerComponents/AllDetails";*/
@@ -9,7 +10,8 @@ export const ROUTES = {
     INDEX: "/",
     BUILD: "/build",
     LOGIN: "/login",
-    REGISTER: "/register"
+    REGISTER: "/register",
+    DETAILS: "/your-details"
 }
 
 export default [
@@ -37,6 +39,13 @@ export default [
     {
         path: ROUTES.BUILD,
         component: Home,
+        header: true,
+        footer: true,
+        isPrivate: true
+    },
+    {
+        path: ROUTES.DETAILS,
+        component: UserInformation,
         header: true,
         footer: true,
         isPrivate: true

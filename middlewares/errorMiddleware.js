@@ -3,6 +3,7 @@ const config = require('../config/config');
 const {logger} = config;
 
 module.exports = (err, req, res, next) => {
+  console.log("err", err, err?.message, err)
   logger.error(`[ errorMiddleware.js ] Error occurred --- ${err?.message || "Unexpected Error"}`)
   if (req.error) {
     const {
