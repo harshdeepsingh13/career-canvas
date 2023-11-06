@@ -11,9 +11,10 @@ const dashKeyFrame = keyframes`
 `
 
 export const LoaderWrapper = styled.div`
+  z-index: 9999;
   width: 100%;
   height: 100%;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   bottom: 0;

@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-
+import {createPortal} from "react-dom";
 import PropTypes from 'prop-types';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {library} from '@fortawesome/fontawesome-svg-core';
@@ -43,4 +43,4 @@ Loader.defaultProps = {
     message: "Loading"
 }
 
-export default Loader
+export default props => createPortal(<Loader {...props} />, document.getElementById("loader"))
