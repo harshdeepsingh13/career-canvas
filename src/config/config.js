@@ -100,6 +100,21 @@ module.exports = {
         UPLOAD_AUDIO: "/music",
         FETCH_MEDIA: "/music",
         DELETE_MEDIA: (id) => `/music/${id}`,
-        RENAME_MEDIA: id => `/music/rename/${id}`
+        RENAME_MEDIA: id => `/music/rename/${id}`,
+        UPDATE_USER_INFORMATION: {
+            BASIC_INFORMATION: "/user/basicInformation",
+            EDUCATION_INFORMATION: "/user/educationInformation",
+            SKILL_INFORMATION: "/user/skillInformation",
+            WORK_EXPERIENCE_INFORMATION: "/user/workExperienceInformation",
+            TRAINING_INFORMATION: "/user/trainingInformation",
+            PROJECT_INFORMATION: "/user/projectInformation",
+        }
+    },
+    EDUCATION_TYPES: {
+        secondary: "secondary",
+        seniorSecondary: "senior secondary",
+        graduation: "graduation",
+        postGraduation: "post graduation",
+        doctorate: "doctorate"
     }
 };

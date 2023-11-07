@@ -39,20 +39,24 @@ $grey-light-text: #999999;
 */
 
 export const COLORS = {
-	PRIMARY: {
-		BLUE: "#0077B6",
-		LIGHT: "#DBF5FA",
-		BACKGROUND: "#F2FBFD",
-		DARK: "#010220"
-	},
-	SECONDARY: {
-		ORANGE: "#FF7A33",
-		DARK: "#89471A"
-	},
-	TEXT: {
-		DARK: "#565555",
-		MEDIUM: "#6c6e6e",
-		LIGHT: "#999999"
-	},
-  BASIC_SOLID: {WHITE: "#fff"}
+    PRIMARY: {
+        BLUE: "#0077B6",
+        LIGHT: "#DBF5FA",
+        BACKGROUND: "#F2FBFD",
+        DARK: "#010220"
+    },
+    SECONDARY: {
+        ORANGE: "#FF7A33",
+        DARK: "#89471A"
+    },
+    TEXT: {
+        DARK: "#565555",
+        MEDIUM: "#6c6e6e",
+        LIGHT: "#999999",
+        XLIGHT: "rgb(222, 226, 230)"
+    },
+    BASIC_SOLID: {
+        WHITE: "#fff",
+        RED: "#ad0000"
+    }
 }

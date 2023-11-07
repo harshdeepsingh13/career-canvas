@@ -1,9 +1,11 @@
 import {
+    deleteUserDetailsItemAPI,
     fetchCompleteUserDetailsAPI,
     fetchUserDetailsAPI,
     loginUserAPI,
     registerUserAPI,
-    updateDetailsAPI
+    updateDetailsAPI,
+    updateUserCompleteInformationAPI
 } from "../../services/axios";
 import {setToken, setUserDetails} from "../../services/localStorage";
 
@@ -73,6 +75,30 @@ export default (state, updateState, loaderSetters, pushToast) => {
                 pushToast({text: e?.response?.data?.message || "An error occurred!", variant: "danger"})
             } finally {
                 loaderSetters.setFetchUserDetailsLoader(false);
+            }
+        },
+        updateCompleteUserDetails: async (updateAPI, updateData, successCallback) => {
+            try {
+                loaderSetters.setUpdateUserInformationLoader(true);
+                await updateUserCompleteInformationAPI(updateAPI, updateData);
+                pushToast({text: "Details updated successfully", variant: "success"})
+                successCallback && successCallback();
+            } catch (e) {
+                pushToast({text: e?.response?.data?.message || "An error occurred!", variant: "danger"})
+            } finally {
+                loaderSetters.setUpdateUserInformationLoader(false)
+            }
+        },
+        deleteUserDetailsItem: async (deleteAPI, toDeleteID, successCallback) => {
+            try {
+                loaderSetters.setUpdateUserInformationLoader(true);
+                await deleteUserDetailsItemAPI(deleteAPI, toDeleteID)
+                pushToast({text: "Details updated successfully", variant: "success"})
+                successCallback && successCallback();
+            } catch (e) {
+                pushToast({text: e?.response?.data?.message || "An error occurred!", variant: "danger"})
+            } finally {
+                loaderSetters.setUpdateUserInformationLoader(false)
             }
         }
     });

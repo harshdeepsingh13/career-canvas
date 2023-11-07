@@ -26,6 +26,7 @@ module.exports = new mongoose.Schema(
         tags: {
             type: Array
         },
+        objective: String,
         contactNumber: {
             type: {
                 countryCode: {type: String, required: true},
@@ -33,7 +34,7 @@ module.exports = new mongoose.Schema(
             }
         },
         currentLocation: {
-            type: LocationSchema
+            type: String
         },
         dob: {
             type: Date
@@ -43,7 +44,7 @@ module.exports = new mongoose.Schema(
         },
         socialMediaLinks: {
             type: SocialMediaLinksSchema
-        }
+        },
     },
     {
         timestamps: true

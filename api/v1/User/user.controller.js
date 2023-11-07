@@ -139,23 +139,22 @@ exports.updateBasicInformationController = async (req, res, next) => {
     const {
         basicInformation,
         basicInformation: {
-            objective,
             website
         }
     } = req.body;
-    if (objective > 200) {
+    /*if (objective > 200) {
         req.error = {
             status: 411,
             message: "Profile Objective should not be more than 200 characters"
         };
         next(new Error());
-    }
-    if (checkWebsiteLink(website)) {
+    }*/
+    if (website && checkWebsiteLink(website)) {
         req.error = {
             status: 411,
             message: "Website link is not valid"
         };
-        next(new Error());
+        return next(new Error());
     }
     try {
         const updatedInformation = await updateBasicInformation(req.user.email, basicInformation);
@@ -169,6 +168,7 @@ exports.updateBasicInformationController = async (req, res, next) => {
             }
         );
     } catch (e) {
+        console.log("e", e);
         req.error = {status: 500, message: "An Error occurred!"}
         return next(new Error());
     }
@@ -177,9 +177,9 @@ exports.updateBasicInformationController = async (req, res, next) => {
 exports.updateEducationInformationController = async (req, res, next) => {
     try {
         const {
-            educationInformation
+            educations: educationInformation
         } = req.body;
-        for (let {isPercentage, isCGPA} of educationInformation) {
+        /*for (let {isPercentage, isCGPA} of educationInformation) {
             if ((isPercentage && isCGPA) || (!isPercentage && !isCGPA)) {
                 req.error = {
                     status: 400,
@@ -187,7 +187,7 @@ exports.updateEducationInformationController = async (req, res, next) => {
                 };
                 next(new Error());
             }
-        }
+        }*/
         let updated = await updateEducationInformation(req.user.email, educationInformation);
         res.status(200).json(
             {
@@ -199,6 +199,7 @@ exports.updateEducationInformationController = async (req, res, next) => {
             }
         )
     } catch (e) {
+        console.log("e", e);
         req.error = {status: 500, message: "An Error occurred!"}
         return next(new Error());
     }
@@ -219,7 +220,6 @@ exports.getEducationInformationController = async (req, res, next) => {
     } catch (e) {
         req.error = {status: 500, message: "An Error occurred!"}
         return next(new Error());
-        ;
     }
 };
 
@@ -228,7 +228,7 @@ exports.updateSkillInformationController = async (req, res, next) => {
         const {
             skills
         } = req.body;
-
+        console.log("skills", skills);
         const updated = await updateSkillInformation(skills, req.user.email);
         res.status(200).json(
             {
@@ -242,7 +242,6 @@ exports.updateSkillInformationController = async (req, res, next) => {
     } catch (e) {
         req.error = {status: 500, message: "An Error occurred!"}
         return next(new Error());
-        ;
     }
 };
 
@@ -261,7 +260,6 @@ exports.getSkillInformationController = async (req, res, next) => {
     } catch (e) {
         req.error = {status: 500, message: "An Error occurred!"}
         return next(new Error());
-        ;
     }
 };
 
@@ -281,7 +279,6 @@ exports.updateWorkExperiencesController = async (req, res, next) => {
     } catch (e) {
         req.error = {status: 500, message: "An Error occurred!"}
         return next(new Error());
-        ;
     }
 };
 
@@ -300,7 +297,6 @@ exports.getWorkExperiencesController = async (req, res, next) => {
     } catch (e) {
         req.error = {status: 500, message: "An Error occurred!"}
         return next(new Error());
-        ;
     }
 };
 
@@ -319,7 +315,6 @@ exports.getProjectInformationController = async (req, res, next) => {
     } catch (e) {
         req.error = {status: 500, message: "An Error occurred!"}
         return next(new Error());
-        ;
     }
 };
 
@@ -339,13 +334,12 @@ exports.updatedProjectInformationController = async (req, res, next) => {
     } catch (e) {
         req.error = {status: 500, message: "An Error occurred!"}
         return next(new Error());
-        ;
     }
 };
 
 exports.deleteProjectInformationController = async (req, res, next) => {
     try {
-        const {projectId} = req.body;
+        const {id: projectId} = req.body;
         if (!projectId) {
             req.error = {
                 status: 400,
@@ -364,19 +358,18 @@ exports.deleteProjectInformationController = async (req, res, next) => {
     } catch (e) {
         req.error = {status: 500, message: "An Error occurred!"}
         return next(new Error());
-        ;
     }
 };
 
 exports.deleteWorkExperienceController = async (req, res, next) => {
     try {
-        const {workExperienceId} = req.body;
+        const {id: workExperienceId} = req.body;
         if (!workExperienceId) {
             res.error = {
                 status: 400,
                 message: "work experience Id is required in the request body."
             };
-            next(new Error());
+            return next(new Error());
         }
         const workExperiences = await deleteWorkExperience(workExperienceId, req.user.email);
         res.status(200).json(
@@ -389,19 +382,18 @@ exports.deleteWorkExperienceController = async (req, res, next) => {
     } catch (e) {
         req.error = {status: 500, message: "An Error occurred!"}
         return next(new Error());
-        ;
     }
 };
 
 exports.deleteEducationInformationController = async (req, res, next) => {
     try {
-        const {educationId} = req.body;
+        const {id: educationId} = req.body;
         if (!educationId) {
             req.error = {
                 status: 400,
                 message: "Education ID is required in request body."
             };
-            next(new Error());
+            return next(new Error());
         }
         const educations = await deleteEducationInformation(educationId, req.user.email);
         res.status(200).json(
@@ -415,7 +407,6 @@ exports.deleteEducationInformationController = async (req, res, next) => {
     } catch (e) {
         req.error = {status: 500, message: "An Error occurred!"}
         return next(new Error());
-        ;
     }
 };
 
@@ -459,13 +450,13 @@ exports.updatedTrainingInformationController = async (req, res, next) => {
 
 exports.deleteTrainingInformationController = async (req, res, next) => {
     try {
-        const {trainingId} = req.body;
+        const {id: trainingId} = req.body;
         if (!trainingId) {
             req.error = {
                 status: 400,
                 message: 'Training Id is missing from the body.'
             };
-            next(new Error());
+            return next(new Error());
         }
         const trainings = await deleteTraining(trainingId, req.user.email);
         res.status(200).json(
@@ -478,7 +469,6 @@ exports.deleteTrainingInformationController = async (req, res, next) => {
     } catch (e) {
         req.error = {status: 500, message: "An Error occurred!"}
         return next(new Error());
-        ;
     }
 };
 
@@ -497,6 +487,5 @@ exports.getTrainingInformationController = async (req, res, next) => {
     } catch (e) {
         req.error = {status: 500, message: "An Error occurred!"}
         return next(new Error());
-        ;
     }
 };

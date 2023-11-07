@@ -4,6 +4,7 @@ import {COLORS} from "../../config/colors";
 
 export const HeaderWrapper = styled(Container)`
   display: flex;
+  z-index: 999;
   justify-content: space-between;
   align-items: center;
   position: fixed;

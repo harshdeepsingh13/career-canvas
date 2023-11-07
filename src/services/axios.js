@@ -50,3 +50,15 @@ export const updateDetailsAPI = updateDetails =>
     })
 
 export const fetchCompleteUserDetailsAPI = () => axiosInstance({method: "GET", url: API_ROUTES.COMPLETE_USER_DETAILS})
+
+export const updateUserCompleteInformationAPI = (updateAPI, data) => axiosInstance({
+    method: "POST",
+    url: updateAPI,
+    data
+});
+
+export const deleteUserDetailsItemAPI = (deleteAPI, id) => axiosInstance({
+    method: "DELETE",
+    url: deleteAPI,
+    data: {id}
+})

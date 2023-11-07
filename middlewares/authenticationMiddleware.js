@@ -53,6 +53,7 @@ module.exports = async (req, res, next) => {
                 }
                 return next(new Error());
             }
+            console.log("e", e);
             req.error = {status: 500, message: "An Error occurred!"}
             return next(new Error());
         }
