@@ -15,7 +15,7 @@ export const FooterWrapper = styled(Container)`
     border-bottom: 2px solid ${COLORS.PRIMARY.LIGHT};
 
     img {
-      width: 50%;
+      width: 150px;
     }
   }
 
