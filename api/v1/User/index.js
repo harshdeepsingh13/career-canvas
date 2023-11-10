@@ -1,25 +1,26 @@
 const express = require("express");
 
 const {
-	deleteEducationInformationController,
-	deleteProjectInformationController,
-	deleteTrainingInformationController,
-	deleteWorkExperienceController,
-	getBasicInformationController,
-	getCompleteInformationController,
-	getEducationInformationController,
-	getProjectInformationController,
-	getSkillInformationController,
-	getTrainingInformationController,
-	getWorkExperiencesController,
-	loginController,
-	registerController,
-	updateBasicInformationController,
-	updatedProjectInformationController,
-	updatedTrainingInformationController,
-	updateEducationInformationController,
-	updateSkillInformationController,
-	updateWorkExperiencesController
+    deleteEducationInformationController,
+    deleteProjectInformationController,
+    deleteTrainingInformationController,
+    deleteWorkExperienceController,
+    getBasicInformationController,
+    getCompleteInformationController,
+    getEducationInformationController,
+    getProjectInformationController,
+    getSkillInformationController,
+    getTrainingInformationController,
+    getWorkExperiencesController,
+    loginController,
+    registerController,
+    updateBasicInformationController,
+    updatedProjectInformationController,
+    updatedTrainingInformationController,
+    updateEducationInformationController,
+    updateSkillInformationController,
+    updateWorkExperiencesController,
+    getProfessionalSummaryController
 } = require('./user.controller');
 const authenticationMiddleware = require("../../../middlewares/authenticationMiddleware");
 const portfolioTokenBlocker = require("../../../middlewares/portfolioTokenBlocker");
@@ -31,6 +32,8 @@ app.post('/login', loginController);
 app.post('/register', registerController);
 
 app.get('/basicInformation', authenticationMiddleware, portfolioTokenBlocker, getBasicInformationController);
+
+app.get("/professionalSummary", authenticationMiddleware, getProfessionalSummaryController)
 
 app.post('/basicInformation', authenticationMiddleware, portfolioTokenBlocker, updateBasicInformationController);
 

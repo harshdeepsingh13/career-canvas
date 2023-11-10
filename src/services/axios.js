@@ -62,3 +62,25 @@ export const deleteUserDetailsItemAPI = (deleteAPI, id) => axiosInstance({
     url: deleteAPI,
     data: {id}
 })
+
+export const getProfessionalSummaryAPI = () => axiosInstance({method: "GET", url: API_ROUTES.PROFESSIONAL_SUMMARY})
+
+export const fetchSkillsAPI = q => axiosInstance({
+    method: "GET",
+    url: API_ROUTES.UPDATE_USER_INFORMATION.SKILL_INFORMATION,
+    params: {q}
+})
+
+export const fetchWorkExperiencesAPI = q => axiosInstance({
+    method: "GET",
+    url: API_ROUTES.UPDATE_USER_INFORMATION.WORK_EXPERIENCE_INFORMATION,
+    params: {q}
+})
+
+export const fetchProjectAPI = q => axiosInstance({
+    method: "GET",
+    url: API_ROUTES.UPDATE_USER_INFORMATION.PROJECT_INFORMATION,
+    params: {q}
+});
+
+export const fetchResumeTemplates = () => axiosInstance({method: "GET", url: API_ROUTES.RESUME_TEMPLATE_ALL})

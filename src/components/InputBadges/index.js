@@ -20,6 +20,10 @@ const InputBadges = ({
                          onChange,
                          max,
                          clickAction,
+                         onAutofill,
+                         autofillItems,
+                         autofillLoader,
+    onSelectAutofill
                      }) => {
     const [myBadges, setMyBadges] = useState(badges);
     const [inputValue, setInputValue] = useState("");
@@ -49,8 +53,11 @@ const InputBadges = ({
     const onKeyDown = (event) => {
         if ((event.keyCode === 13 || event.key === "Enter") && inputValue) {
             addBadge(inputValue);
-
         }
+    }
+
+    const onValueChange = value => {
+        setInputValue(value);
     }
 
     const onBadgeClick = (event, badge, index) => {
@@ -62,6 +69,11 @@ const InputBadges = ({
                     return;
             }
         }
+    }
+
+    const handleSelectAutofill = (autofillValue) => {
+        addBadge(autofillValue);
+        onSelectAutofill && onSelectAutofill(autofillValue)
     }
 
     return <>
@@ -90,8 +102,12 @@ const InputBadges = ({
                             placeholder={placeholder}
                             groupClassName={"input-group"}
                             value={inputValue}
-                            onChange={value => setInputValue(value)}
+                            onChange={onValueChange}
                             onKeyDown={onKeyDown}
+                            onAutofill={onAutofill}
+                            autofillLoader={autofillLoader}
+                            autofillItems={autofillItems}
+                            onSelectAutofill={handleSelectAutofill}
                         />
                         <small>Press Enter &#8629; to add. Click on the badge to delete</small>
                     </div>
@@ -112,7 +128,11 @@ InputBadges.propTypes = {
     readOnly: PropTypes.bool,
     onChange: PropTypes.func,
     max: PropTypes.number,
-    clickAction: PropTypes.oneOf(Object.keys(CLICK_ACTIONS))
+    clickAction: PropTypes.oneOf(Object.keys(CLICK_ACTIONS)),
+    onAutofill: PropTypes.func,
+    autofillItems: PropTypes.array,
+    autofillLoader: PropTypes.bool,
+    onSelectAutofill: PropTypes.func
 };
 InputBadges.defaultProps = {
     badgeProps: {},
@@ -120,7 +140,7 @@ InputBadges.defaultProps = {
     name: "input-badge",
     id: "input-badge",
     placeholder: "Badge",
-    readOnly: false
+    readOnly: false,
 };
 
 export default InputBadges

@@ -101,6 +101,9 @@ module.exports = {
         FETCH_MEDIA: "/music",
         DELETE_MEDIA: (id) => `/music/${id}`,
         RENAME_MEDIA: id => `/music/rename/${id}`,
+        PROFESSIONAL_SUMMARY: "/user/professionalSummary",
+        RESUME_TEMPLATE: "/resumeTemplate",
+        RESUME_TEMPLATE_ALL: "/resumeTemplate/all",
         UPDATE_USER_INFORMATION: {
             BASIC_INFORMATION: "/user/basicInformation",
             EDUCATION_INFORMATION: "/user/educationInformation",

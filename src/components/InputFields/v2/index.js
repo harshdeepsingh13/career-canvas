@@ -1,7 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {Form} from "react-bootstrap";
 import PropTypes from 'prop-types';
 import {CheckWrapper, GroupWrapper, InputWrapper, LabelWrapper, SelectWrapper} from "./styles";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faCircleNotch} from "@fortawesome/free-solid-svg-icons";
+import {COLORS} from "../../../config/colors";
+import _ from "lodash";
 
 const SelectInput = React.forwardRef(({
                                           name,
@@ -143,30 +147,68 @@ const InputV2 = React.forwardRef(({
                                       errorMessage,
                                       className,
                                       groupClassName,
-                                      children
+                                      children,
+                                      onAutofill,
+                                      autofillItems,
+                                      autofillLoader,
+                                      onSelectAutofill,
                                   }, ref) => {
 
     const [myValue, setMyValue] = useState(value || "");
     const [isValid, setIsValid] = useState(true);
     const [invalidMessage, setInvalidMessage] = useState("");
+    const [showAutofillList, setShowAutofillList] = useState(false);
+
+    const inputRef = useRef();
+    const autofillListRef = useRef();
 
     useEffect(() => {
         setMyValue(value)
     }, [value]);
+    useEffect(() => {
+        if (onAutofill && autofillItems && myValue) setShowAutofillList(true);
+        const element = autofillListRef?.current;
+
+        const handleClickOutside = (event) => {
+            if (element && !element?.contains(event.target)) {
+                setShowAutofillList(false)
+            }
+        }
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [onAutofill, autofillItems, autofillListRef, myValue]);
+
+    const handleAutofillDebounced = useMemo(() => onAutofill && _.debounce(onAutofill, 300), [onAutofill])
 
     const handleChange = (args) => {
         const {target: {value: inputValue}} = args;
         setMyValue(inputValue);
-        onChange(inputValue);
+        onChange && onChange(inputValue);
         if (validator) {
             const {isValid, message} = validator(inputValue);
             setIsValid(isValid);
             setInvalidMessage(message);
         }
+        if (onAutofill) {
+            if (inputValue)
+                handleAutofillDebounced(inputValue);
+            else
+                setShowAutofillList(false);
+        }
     }
 
     const handleOnKeyDown = (event) => {
         onKeyDown && onKeyDown(event)
+    }
+
+    const onClickAutofillItem = (autofill) => {
+        handleChange({target: {value: ""}})
+        // inputRef.current.value = autofill;
+        inputRef.current.focus();
+        onSelectAutofill && onSelectAutofill(autofill);
     }
 
     return <>
@@ -176,25 +218,47 @@ const InputV2 = React.forwardRef(({
                 <LabelWrapper>{label}</LabelWrapper>
             }
             {children && children}
-            <InputWrapper
-                as={as}
-                type={type}
-                name={name}
-                id={id}
-                value={myValue}
-                placeholder={placeholder}
-                onChange={handleChange}
-                onKeyDown={handleOnKeyDown}
-                className={className}
-                isInvalid={error || !isValid}
-                disabled={disabled}
-                readOnly={readOnly}
-            />
-            {(error || Boolean(validator)) &&
-                <Form.Control.Feedback type="invalid">
-                    {error ? errorMessage : !isValid ? invalidMessage : ""}
-                </Form.Control.Feedback>
-            }
+            <div className="autofill-input-container">
+                <div className="input-container">
+                    <InputWrapper
+                        ref={inputRef}
+                        as={as}
+                        type={type}
+                        name={name}
+                        id={id}
+                        value={myValue}
+                        placeholder={placeholder}
+                        onChange={handleChange}
+                        onKeyDown={handleOnKeyDown}
+                        className={className}
+                        isInvalid={error || !isValid}
+                        disabled={disabled}
+                        readOnly={readOnly}
+                    />
+                    {(error || Boolean(validator)) &&
+                        <Form.Control.Feedback type="invalid">
+                            {error ? errorMessage : !isValid ? invalidMessage : ""}
+                        </Form.Control.Feedback>
+                    }
+                </div>
+                {(onAutofill && autofillLoader) && <div className="autofill-loader-container">
+                    <FontAwesomeIcon icon={faCircleNotch} color={COLORS.SECONDARY.ORANGE} size={"xl"} spin/>
+                </div>}
+                {
+                    (onAutofill && showAutofillList && autofillItems) &&
+                    <div className="autofill-items-container" ref={autofillListRef}>
+                        {autofillItems.map((autofill, index) => <div
+                                className="autofill-item"
+                                key={`${autofill}-${index}`}
+                                onClick={() => onClickAutofillItem(autofill)}
+                            >
+                                {typeof autofill === "object" && <autofill.Item/>}
+                                {typeof autofill === "string" && autofill}
+                            </div>
+                        )}
+                    </div>
+                }
+            </div>
         </GroupWrapper>
     </>
 });
@@ -217,6 +281,16 @@ const propTypes = {
     label: PropTypes.string,
     className: PropTypes.string,
     groupClassName: PropTypes.string,
+    onAutofill: PropTypes.func,
+    autofillItems: PropTypes.oneOfType([
+        PropTypes.arrayOf(PropTypes.string),
+        PropTypes.arrayOf(PropTypes.shape({
+            value: PropTypes.object,
+            Item: PropTypes.func
+        }))
+    ]),
+    autofillLoader: PropTypes.bool,
+    onSelectAutofill: PropTypes.func,
     type: PropTypes.oneOf(["button", "checkbox", "color", "date", "datetime-local", "email", "file", "hidden", "image", "month", "number", "password", "radio", "range", "reset", "search", "submit", "tel", "text", "time", "url", "week"])
 };
 const defaultProps = {
@@ -228,7 +302,8 @@ const defaultProps = {
     disabled: false,
     readOnly: false,
     error: false,
-    style: {}
+    style: {},
+    autofillLoader: false
 };
 
 InputV2.propTypes = propTypes;
@@ -245,7 +320,9 @@ const arePropsEqual = (prev, next) => prev.value === next.value &&
     prev.error === next.error &&
     prev.errorMessage === next.errorMessage &&
     prev.disabled === next.disabled &&
-    prev.readOnly === next.readOnly
+    prev.readOnly === next.readOnly &&
+    prev.autofillLoader === next.autofillLoader &&
+    prev.autofillItems === next.autofillItems
 
 export const SelectV2 = React.memo(SelectInput, arePropsEqual);
 export const CheckV2 = React.memo(InputCheck, arePropsEqual)

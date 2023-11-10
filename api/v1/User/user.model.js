@@ -71,12 +71,10 @@ exports.getUser = (email, wantPassword = false) => {
     );
 };
 
-exports.getBasicInformation = email =>
+exports.getBasicInformation = (email, projection = basicInformationProjection) =>
     User.findOne(
-        {
-            email
-        },
-        basicInformationProjection
+        {email},
+        projection
     );
 
 exports.updateBasicInformation = (userEmail, basicInformation) => {
@@ -157,7 +155,32 @@ exports.updateSkillInformation = (skills, email) =>
         {new: true, upsert: true}
     )
 
-exports.getSkillInformation = email => Skill.findOne    ({user: email}, skillInformationProjection)
+exports.getSkillInformation = async (email, q) => {
+    if (q) {
+        return (await Skill.aggregate([
+            {$match: {user: email}},
+            {
+                $set: {
+                    skills: {
+                        $filter: {
+                            input: "$skills",
+                            as: "skill",
+                            cond: {
+                                $regexMatch: {
+                                    input: "$$skill",
+                                    regex: new RegExp("^" + q),
+                                    options: "i"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            {$project: skillInformationProjection}
+        ]))[0]
+    }
+    return Skill.findOne({user: email}, skillInformationProjection);
+}
 
 exports.updateWorkExperiences = async (workExperiences, email) => {
     const updated = [];
@@ -183,28 +206,30 @@ exports.updateWorkExperiences = async (workExperiences, email) => {
     return updated;
 };
 
-exports.getWorkExperiences = email =>
-    WorkExperience.find(
-        {
-            user: email
-        },
+exports.getWorkExperiences = (email, q) => {
+    let filter = {user: email};
+    if (q) filter.company = {$regex: q, $options: "i"}
+    return WorkExperience.find(
+        filter,
         {},
         {
             sort: {startDate: -1}
         }
     );
+};
 
 
-exports.getProjectInformation = email =>
-    Project.find(
-        {
-            user: email
-        },
+exports.getProjectInformation = (email, q) => {
+    let filter = {user: email};
+    if (q) filter.name = {$regex: q, $options: "i"}
+    return Project.find(
+        filter,
         {},
         {
             sort: {startDate: -1}
         }
     );
+};
 
 exports.updateProjectInformation = async (projects, email) => {
     const updated = [];

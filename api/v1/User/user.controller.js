@@ -247,14 +247,13 @@ exports.updateSkillInformationController = async (req, res, next) => {
 
 exports.getSkillInformationController = async (req, res, next) => {
     try {
-        const {skills} = await getSkillInformation(req.user.email);
+        const {q} = req.query;
+        const {skills} = await getSkillInformation(req.user.email, q);
         res.status(200).json(
             {
                 status: 200,
                 message: "data successfully retrieved",
-                data: {
-                    skills
-                }
+                data: {skills}
             }
         )
     } catch (e) {
@@ -284,7 +283,8 @@ exports.updateWorkExperiencesController = async (req, res, next) => {
 
 exports.getWorkExperiencesController = async (req, res, next) => {
     try {
-        const workExperiences = await getWorkExperiences(req.user.email);
+        const {q} = req.query;
+        const workExperiences = await getWorkExperiences(req.user.email, q);
         res.status(200).json(
             {
                 status: 200,
@@ -302,7 +302,8 @@ exports.getWorkExperiencesController = async (req, res, next) => {
 
 exports.getProjectInformationController = async (req, res, next) => {
     try {
-        const projects = await getProjectInformation(req.user.email);
+        const {q} = req.query;
+        const projects = await getProjectInformation(req.user.email, q);
         res.status(200).json(
             {
                 status: 200,
@@ -489,3 +490,16 @@ exports.getTrainingInformationController = async (req, res, next) => {
         return next(new Error());
     }
 };
+
+exports.getProfessionalSummaryController = async (req, res, next) => {
+    try {
+        const professionalSummary = await getBasicInformation(req.user.email, {objective: 1})
+        res.status(200).json({
+            message: "Professional Summary successfully retrieved",
+            data: {objective: professionalSummary?.objective}
+        })
+    } catch (e) {
+        req.error = {status: 500, message: "An Error occurred!"}
+        return next(new Error());
+    }
+}

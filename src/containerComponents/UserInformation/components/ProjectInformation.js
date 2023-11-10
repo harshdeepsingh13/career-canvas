@@ -177,8 +177,8 @@ const ProjectInformation = ({data, viewMode, onChangeData, onDeleteItem}) => {
                             <InputBadges
                                 name={"tech-stack"}
                                 id={"tech-stack"}
-                                label={"Skills"}
-                                placeholder={"Skills"}
+                                label={"Tech Stack"}
+                                placeholder={"Tech Stack"}
                                 groupClassName={"data-field-container"}
                                 readOnly={viewMode === VIEW_MODE.VIEW}
                                 badges={project?.technologyStack}
