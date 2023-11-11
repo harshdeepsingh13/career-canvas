@@ -76,10 +76,9 @@ const Login = props => {
                     onChange={onPasswordChange}
                     placeholder={"Enter Password"}
                     label={"Password"}
-                    validator={validatePassword}
                 />
-                <Link to={ROUTES.REGISTER}> Create a new account </Link>
-                <Button onClick={onLoginClick}>
+                <Link to={ROUTES.REGISTER} className={"create-account-link"}> Create a new account </Link>
+                <Button onClick={onLoginClick} className={"login-button"}>
                     Login
                 </Button>
             </LoginWrapper>

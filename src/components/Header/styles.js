@@ -25,6 +25,11 @@ export const HeaderWrapper = styled(Container)`
 
     .nav-link {
       margin: 10px;
+
+      &.active{
+        color: ${COLORS.SECONDARY.ORANGE};
+        font-weight: 500;
+      }
     }
 
   }

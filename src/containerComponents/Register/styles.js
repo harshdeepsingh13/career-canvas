@@ -12,7 +12,7 @@ export const RegisterWrapper = styled.div`
       width: 100%;
     }
 
-    input {
+    .autofill-input-container {
       display: inline-block;
       width: 75%;
     }

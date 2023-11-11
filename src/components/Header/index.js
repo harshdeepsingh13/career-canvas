@@ -40,7 +40,7 @@ const Header = props => {
                 </>)}
                 {
                     isAuthorized &&
-                    <NavLink to={""}
+                    <NavLink to={"/logout"}
                              className={({isActive}) => `nav-link ${isActive && "active"}`}
                              onClick={logout}
                     >
