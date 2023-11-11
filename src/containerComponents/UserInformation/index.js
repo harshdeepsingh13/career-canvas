@@ -1,6 +1,6 @@
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import PropTypes from 'prop-types';
-import {PageViewContainer} from "../../config/globalStyles";
+import {PageHeader, PageViewContainer} from "../../config/globalStyles";
 import {ActionsWrapper, TabContentWrapper, UserInformationTabsWrapper, UserInformationWrapper} from "./styles";
 import {useUserContext} from "../../context/UserContextProvider";
 import Loader from "../../components/Loader";
@@ -116,6 +116,7 @@ const UserInformation = props => {
         {fetchUserDetailsLoader && <Loader message={"Finding your details"}/>}
         {updateUserInformationLoader && <Loader message={"updating your details"}/>}
         <PageViewContainer>
+            <PageHeader>Your Complete Details</PageHeader>
             <ActionsWrapper>
                 {viewMode === VIEW_MODE.VIEW &&
                     <Button

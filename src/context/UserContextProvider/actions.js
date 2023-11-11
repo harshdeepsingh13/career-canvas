@@ -33,7 +33,7 @@ export default (state, updateState, loaderSetters, pushToast) => {
             } catch (e) {
                 console.log("e.response.data", e.response.data);
                 if (e.response.data.status === 404) {
-                    emailPasswordErrorCallback(e.response.data.message);
+                    emailPasswordErrorCallback && emailPasswordErrorCallback(e.response.data.message);
                 } else
                     pushToast({text: e?.response?.data?.message || "An error occurred!", variant: "danger"})
             } finally {

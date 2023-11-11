@@ -11,13 +11,15 @@ const initState = {
     professionalSummary: "",
     skillsAutofillItems: [],
     workExperienceAutofillItems: [],
-    projectAutofillItems: []
+    projectAutofillItems: [],
+    templates: []
 };
 
 const ResumeTemplateContextProvider = ({children}) => {
 
     const [state, setState] = useState(initState);
     const [fetchTemplatesLoader, setFetchTemplatesLoader] = useState(false);
+const [addTemplateLoader, setAddTemplateLoader] = useState(false);
     const [fetchSummaryLoader, setFetchSummaryLoader] = useState(false)
     const [skillsAutofillLoader, setSkillsAutofillLoader] = useState(false)
     const [workExperienceAutofillLoader, setWorkExperienceAutofillLoader] = useState(false);
@@ -34,7 +36,8 @@ const ResumeTemplateContextProvider = ({children}) => {
         setSkillsAutofillLoader,
         setWorkExperienceAutofillLoader,
         setProjectAutofillLoader,
-        setFetchTemplatesLoader
+        setFetchTemplatesLoader,
+        setAddTemplateLoader
     }, pushToast), [state, updateState]);
 
 
@@ -46,9 +49,10 @@ const ResumeTemplateContextProvider = ({children}) => {
             skillsAutofillLoader,
             workExperienceAutofillLoader,
             projectAutofillLoader,
-            fetchTemplatesLoader
+            fetchTemplatesLoader,
+            addTemplateLoader
         }
-    }), [enhancedActions, state, fetchSummaryLoader, skillsAutofillLoader, updateState, workExperienceAutofillLoader, projectAutofillLoader, fetchTemplatesLoader]);
+    }), [enhancedActions, state, fetchSummaryLoader, skillsAutofillLoader, updateState, workExperienceAutofillLoader, projectAutofillLoader, fetchTemplatesLoader, addTemplateLoader]);
 
     return <>
         <ResumeTemplateContext.Provider value={value}>

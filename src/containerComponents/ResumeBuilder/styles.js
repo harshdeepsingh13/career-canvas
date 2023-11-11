@@ -46,3 +46,15 @@ export const DataContentWrapper = styled.div`
   }
 
 `;
+
+export const NoTemplatesWrapper = styled.div`
+  text-align: center;
+  margin: 5em;
+
+  h3{
+    color: ${COLORS.TEXT.MEDIUM};
+    font-size: 1em;
+    margin: 2em;
+  }
+
+`;

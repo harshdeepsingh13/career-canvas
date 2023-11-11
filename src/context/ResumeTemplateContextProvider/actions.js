@@ -55,10 +55,20 @@ export default (state, updateState, loaderSetters, pushToast) => {
             try {
                 loaderSetters.setFetchTemplatesLoader(true)
                 const {data: {data}} = await fetchResumeTemplatesAPI();
+                updateState({templates: data.templates})
             } catch (e) {
                 pushToast({text: e?.response?.data?.message || "An error occurred!", variant: "danger"})
             } finally {
                 loaderSetters.setFetchTemplatesLoader(false)
+            }
+        },
+        addResumeTemplate: () => {
+            try{
+
+            } catch (e) {
+                pushToast({text: e?.response?.data?.message || "An error occurred!", variant: "danger"})
+            } finally {
+                loaderSetters.setAddTemplateLoader(false)
             }
         }
     })

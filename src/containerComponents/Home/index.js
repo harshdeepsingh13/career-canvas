@@ -1,5 +1,5 @@
 import React from 'react';
-import {PageViewContainer} from "../../config/globalStyles";
+import {PageHeader, PageViewContainer} from "../../config/globalStyles";
 import {HomeWrapper} from "./styles";
 import {Link} from "react-router-dom";
 import Button from "../../components/Button";
@@ -14,7 +14,7 @@ const Home = props => {
         <PageViewContainer>
             <HomeWrapper>
                 <div className="section header-section">
-                    <p className="welcome">Welcome to Career Canvas</p>
+                    <PageHeader>Welcome to Career Canvas</PageHeader>
                     <h2>Your Gateway to seamless Career Advancement</h2>
                     <p className="description">
                         Crafting the perfect resume and cover letter is not effortlessly with reach. We empower you to

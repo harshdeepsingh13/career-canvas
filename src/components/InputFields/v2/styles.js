@@ -18,6 +18,7 @@ export const GroupWrapper = styled(Form.Group)`
     }
 
     textarea {
+      min-height: 12em;
       padding: 6px 12px;
       width: 100%;
       border: 1px solid ${COLORS.TEXT.XLIGHT};

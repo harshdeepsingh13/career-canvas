@@ -8,7 +8,8 @@ import {ROUTES} from "../../config/routes";
 import {useAuthenticationContext} from "../../context/AuthorizationContext";
 
 const navs = [
-    {text: "Build Resume", link: ROUTES.BUILD}, {text: "Your Details", link: ROUTES.DETAILS}
+    {text: "Build Resume", link: ROUTES.BUILD}, {text: "Your Details", link: ROUTES.DETAILS},
+    {text: "Job Search", link: ROUTES.JOBS}
 ]
 const Header = props => {
 
@@ -39,13 +40,18 @@ const Header = props => {
                     </NavLink>
                 </>)}
                 {
-                    isAuthorized &&
-                    <NavLink to={"/logout"}
-                             className={({isActive}) => `nav-link ${isActive && "active"}`}
-                             onClick={logout}
-                    >
-                        Logout
-                    </NavLink>
+                    isAuthorized ?
+                        <NavLink to={"/logout"}
+                                 className={({isActive}) => `nav-link ${isActive && "active"}`}
+                                 onClick={logout}
+                        >
+                            Logout
+                        </NavLink> :
+                        <NavLink to={ROUTES.LOGIN}
+                                 className={({isActive}) => `nav-link ${isActive && "active"}`}
+                        >
+                            Login / Register
+                        </NavLink>
                 }
             </div>
         </HeaderWrapper>
