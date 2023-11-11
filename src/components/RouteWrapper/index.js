@@ -10,7 +10,7 @@ import Footer from "../Footer";
 import {ROUTES} from "../../config/routes";
 // import Header from "../Header";
 
-const RouteWrapper = ({children, isPrivate, header, footer, headerOptions}) => {
+const RouteWrapper = ({children, isPrivate, header, footer, headerOptions, allCanOpen}) => {
 
     const {isAuthorized} = useAuthenticationContext();
 
@@ -18,14 +18,16 @@ const RouteWrapper = ({children, isPrivate, header, footer, headerOptions}) => {
 
         {header && <Header options={headerOptions}/>}
         {
-            isPrivate ?
-                <>
-                    {isAuthorized ? <PrivateRoute>{children}</PrivateRoute> : <Navigate to={ROUTES.LOGIN}/>}
-                </> :
-                <>
-                    {/*{!isAuthorized ? <Container>{children}</Container> : <Navigate to={ROUTE_PATHS.INDEX}/>}*/}
-                    {!isAuthorized ? children : <Navigate to="/"/>}
-                </>
+            allCanOpen ? children :
+                isPrivate ?
+                    <>
+                        {isAuthorized ? <PrivateRoute>{children}</PrivateRoute> : <Navigate to={ROUTES.LOGIN}/>}
+                    </> :
+                    <>
+                        {/*{!isAuthorized ? <Container>{children}</Container> : <Navigate to={ROUTE_PATHS.INDEX}/>}*/}
+                        yo
+                        {!isAuthorized ? children : <Navigate to={ROUTES.INDEX}/>}
+                    </>
         }
         {footer && <Footer/>}
     </>

@@ -14,9 +14,9 @@ export const button_variant = {
     link: "link",
 }
 
-const Button = ({onClick, className, children, variant}) => {
+const Button = ({onClick, className, children, variant, as}) => {
     return <>
-        <ButtonWrapper onClick={onClick} className={className} variant={variant}>
+        <ButtonWrapper onClick={onClick} className={className} variant={variant} as={as}>
             {children}
         </ButtonWrapper>
     </>

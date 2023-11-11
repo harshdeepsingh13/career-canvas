@@ -1,5 +1,5 @@
 import {
-    fetchProjectAPI,
+    fetchProjectAPI, fetchResumeTemplatesAPI,
     fetchSkillsAPI,
     fetchWorkExperiencesAPI,
     getProfessionalSummaryAPI

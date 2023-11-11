@@ -2,6 +2,7 @@ import Home from "../containerComponents/Home";
 import Login from "../containerComponents/Login";
 import Register from "../containerComponents/Register";
 import UserInformation from "../containerComponents/UserInformation";
+import ResumeBuilder from "../components/ResumeBuilder";
 /*import Templates from "../containerComponents/Templates";
 import Register from "../containerComponents/Register";
 import AllDetails from "../containerComponents/AllDetails";*/
@@ -20,7 +21,8 @@ export default [
         component: Home,
         header: true,
         footer: true,
-        isPrivate: false
+        isPrivate: false,
+        allCanOpen: true
     },
     {
         path: ROUTES.LOGIN,
@@ -38,7 +40,7 @@ export default [
     },
     {
         path: ROUTES.BUILD,
-        component: Home,
+        component: ResumeBuilder,
         header: true,
         footer: true,
         isPrivate: true

@@ -83,4 +83,4 @@ export const fetchProjectAPI = q => axiosInstance({
     params: {q}
 });
 
-export const fetchResumeTemplates = () => axiosInstance({method: "GET", url: API_ROUTES.RESUME_TEMPLATE_ALL})
+export const fetchResumeTemplatesAPI = () => axiosInstance({method: "GET", url: API_ROUTES.RESUME_TEMPLATE_ALL})

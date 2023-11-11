@@ -42,7 +42,7 @@ export const COLORS = {
     PRIMARY: {
         BLUE: "#0077B6",
         LIGHT: "#DBF5FA",
-        BACKGROUND: "#F2FBFD",
+        BACKGROUND: "#F8F8F8",
         DARK: "#010220"
     },
     SECONDARY: {
