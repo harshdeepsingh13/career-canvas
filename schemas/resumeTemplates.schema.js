@@ -4,8 +4,8 @@ module.exports = mongoose.Schema({
 	user: {
 		type: String, required: true, index: true
 	},
-	templateName: {type: String, required: true, default: "Default Resume Template"},
-	objective: {type: String, required: true},
+	templateName: {type: String, required: true, default: "Default Template Name"},
+	objective: {type: String},
 	educationDetails: {type: Array},
 	skills: {type: Array},
 	workExperience: {type: Array},

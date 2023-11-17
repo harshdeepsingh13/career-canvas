@@ -6,6 +6,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCircleNotch} from "@fortawesome/free-solid-svg-icons";
 import {COLORS} from "../../../config/colors";
 import _ from "lodash";
+import Logo, {LOGO_MODE} from "../../Logo";
 
 const SelectInput = React.forwardRef(({
                                           name,
@@ -151,6 +152,7 @@ const InputV2 = React.forwardRef(({
                                       onAutofill,
                                       autofillItems,
                                       autofillLoader,
+                                      autofillEmptyItemMessage,
                                       onSelectAutofill,
                                   }, ref) => {
 
@@ -193,10 +195,10 @@ const InputV2 = React.forwardRef(({
             setInvalidMessage(message);
         }
         if (onAutofill) {
-            if (inputValue)
-                handleAutofillDebounced(inputValue);
-            else
-                setShowAutofillList(false);
+            // if (inputValue)
+            handleAutofillDebounced(inputValue);
+            // else
+            //     setShowAutofillList(false);
         }
     }
 
@@ -256,6 +258,13 @@ const InputV2 = React.forwardRef(({
                                 {typeof autofill === "string" && autofill}
                             </div>
                         )}
+                        {
+                            (autofillItems.length === 0 && autofillEmptyItemMessage) &&
+                            <div className="autofill-item placeholder-item">
+                                <Logo className="placeholder-logo" mode={LOGO_MODE.ICON}/>
+                                <div className="message">{autofillEmptyItemMessage}</div>
+                            </div>
+                        }
                     </div>
                 }
             </div>
@@ -291,6 +300,7 @@ const propTypes = {
     ]),
     autofillLoader: PropTypes.bool,
     onSelectAutofill: PropTypes.func,
+    autofillEmptyItemMessage: PropTypes.string,
     type: PropTypes.oneOf(["button", "checkbox", "color", "date", "datetime-local", "email", "file", "hidden", "image", "month", "number", "password", "radio", "range", "reset", "search", "submit", "tel", "text", "time", "url", "week"])
 };
 const defaultProps = {

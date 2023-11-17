@@ -21,12 +21,12 @@ export const TabContentWrapper = styled(Col)`
     border-bottom: thin solid ${COLORS.TEXT.XLIGHT};
     position: relative;
 
-    .delete-icon-container{
+    .delete-icon-container {
       position: absolute;
       right: 0;
     }
 
-    &:first-child{
+    &:first-child {
       padding-top: unset;
     }
 
@@ -35,7 +35,7 @@ export const TabContentWrapper = styled(Col)`
     }
   }
 
-  .add-record-button{
+  .add-record-button {
     margin: 1em 0;
     position: relative;
     left: 50%;

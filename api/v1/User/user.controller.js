@@ -207,7 +207,8 @@ exports.updateEducationInformationController = async (req, res, next) => {
 
 exports.getEducationInformationController = async (req, res, next) => {
     try {
-        const educationInformation = await getEducationInformation(req.user.email);
+        const {q} = req.query;
+        const educationInformation = await getEducationInformation(req.user.email, q);
         res.status(200).json(
             {
                 status: 200,
@@ -475,7 +476,8 @@ exports.deleteTrainingInformationController = async (req, res, next) => {
 
 exports.getTrainingInformationController = async (req, res, next) => {
     try {
-        const trainings = await getTrainingInformation(req.user.email);
+        const {q} = req.query;
+        const trainings = await getTrainingInformation(req.user.email, q);
         res.status(200).json(
             {
                 status: 200,

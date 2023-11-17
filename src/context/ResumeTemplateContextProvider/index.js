@@ -12,18 +12,25 @@ const initState = {
     skillsAutofillItems: [],
     workExperienceAutofillItems: [],
     projectAutofillItems: [],
-    templates: []
+    educationAutofillItems: [],
+    templates: [],
+    certificateAutofillItems: [],
+    templateDetails: {}
 };
 
 const ResumeTemplateContextProvider = ({children}) => {
 
     const [state, setState] = useState(initState);
     const [fetchTemplatesLoader, setFetchTemplatesLoader] = useState(false);
-const [addTemplateLoader, setAddTemplateLoader] = useState(false);
+    const [addTemplateLoader, setAddTemplateLoader] = useState(false);
     const [fetchSummaryLoader, setFetchSummaryLoader] = useState(false)
     const [skillsAutofillLoader, setSkillsAutofillLoader] = useState(false)
     const [workExperienceAutofillLoader, setWorkExperienceAutofillLoader] = useState(false);
     const [projectAutofillLoader, setProjectAutofillLoader] = useState(false);
+    const [fetchTemplateDetailsLoader, setFetchTemplateDetailsLoader] = useState(false);
+    const [educationAutofillLoader, setEducationAutofillLoader] = useState(false);
+    const [certificateAutofillLoader, setCertificateAutofillLoader] = useState(false);
+    const [updateTemplateLoader, setUpdateTemplateLoader] = useState(false);
 
     const {pushToast} = useToastContext();
 
@@ -37,7 +44,11 @@ const [addTemplateLoader, setAddTemplateLoader] = useState(false);
         setWorkExperienceAutofillLoader,
         setProjectAutofillLoader,
         setFetchTemplatesLoader,
-        setAddTemplateLoader
+        setAddTemplateLoader,
+        setFetchTemplateDetailsLoader,
+        setEducationAutofillLoader,
+        setCertificateAutofillLoader,
+        setUpdateTemplateLoader
     }, pushToast), [state, updateState]);
 
 
@@ -50,9 +61,13 @@ const [addTemplateLoader, setAddTemplateLoader] = useState(false);
             workExperienceAutofillLoader,
             projectAutofillLoader,
             fetchTemplatesLoader,
-            addTemplateLoader
+            addTemplateLoader,
+            fetchTemplateDetailsLoader,
+            educationAutofillLoader,
+            certificateAutofillLoader,
+            updateTemplateLoader
         }
-    }), [enhancedActions, state, fetchSummaryLoader, skillsAutofillLoader, updateState, workExperienceAutofillLoader, projectAutofillLoader, fetchTemplatesLoader, addTemplateLoader]);
+    }), [enhancedActions, state, fetchSummaryLoader, skillsAutofillLoader, updateState, workExperienceAutofillLoader, projectAutofillLoader, fetchTemplatesLoader, addTemplateLoader, fetchTemplateDetailsLoader, educationAutofillLoader, certificateAutofillLoader, updateTemplateLoader]);
 
     return <>
         <ResumeTemplateContext.Provider value={value}>

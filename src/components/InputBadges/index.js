@@ -23,7 +23,8 @@ const InputBadges = ({
                          onAutofill,
                          autofillItems,
                          autofillLoader,
-    onSelectAutofill
+                         onSelectAutofill,
+                         autofillEmptyItemMessage
                      }) => {
     const [myBadges, setMyBadges] = useState(badges);
     const [inputValue, setInputValue] = useState("");
@@ -38,16 +39,21 @@ const InputBadges = ({
         if (!isMounted.current) {
             isMounted.current = true;
         } else {
-            onChange && onChange(myBadges)
+            // onChange && onChange(myBadges)
             setInputValue("");
         }
     }, [myBadges]);
 
     const addBadge = (newBadge) => {
+        const setterFunc = prev => {
+            const newBadges = [...prev, newBadge]
+            onChange(newBadges);
+            return newBadges;
+        }
         if (max && myBadges?.length < max)
-            setMyBadges(prev => [...prev, newBadge])
+            setMyBadges(setterFunc)
         else if (!max)
-            setMyBadges(prev => [...prev, newBadge])
+            setMyBadges(setterFunc)
     }
 
     const onKeyDown = (event) => {
@@ -64,7 +70,12 @@ const InputBadges = ({
         if (!readOnly) {
             switch (clickAction) {
                 case CLICK_ACTIONS.DELETE:
-                    setMyBadges(prev => [...prev.slice(0, index), ...prev.slice(index + 1)])
+                    setMyBadges(prev => {
+                        const newBadges = [...prev.slice(0, index), ...prev.slice(index + 1)];
+                        onChange(newBadges);
+                        return newBadges;
+                    })
+                    return;
                 default:
                     return;
             }
@@ -108,6 +119,7 @@ const InputBadges = ({
                             autofillLoader={autofillLoader}
                             autofillItems={autofillItems}
                             onSelectAutofill={handleSelectAutofill}
+                            autofillEmptyItemMessage={autofillEmptyItemMessage}
                         />
                         <small>Press Enter &#8629; to add. Click on the badge to delete</small>
                     </div>
@@ -132,7 +144,8 @@ InputBadges.propTypes = {
     onAutofill: PropTypes.func,
     autofillItems: PropTypes.array,
     autofillLoader: PropTypes.bool,
-    onSelectAutofill: PropTypes.func
+    onSelectAutofill: PropTypes.func,
+    autofillEmptyItemMessage: PropTypes.string
 };
 InputBadges.defaultProps = {
     badgeProps: {},
