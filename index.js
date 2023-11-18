@@ -13,10 +13,13 @@ const config = require('./config/config');
 const v1Routes = require('./api/v1');
 const errorMiddleware = require('./middlewares/errorMiddleware');
 const mongooseConnection = require('./config/mongoose');
+const {pocFunction} = require("./services/puppeteer.service");
 
 const port = process.env.PORT || 8081;
 const app = express();
 const {logger} = config;
+
+pocFunction(require("./templates/templateOne").getTemplate());
 
 //middlewares
 app.use(Morgan('dev'));
