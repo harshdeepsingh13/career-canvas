@@ -9,6 +9,27 @@ export const PageViewContainer = styled(Container)`
   //min-height: 100vh;
   margin-top: 100px;
   margin-bottom: 100px;
+
+  .education-item, .work-experience-item, .training-item, .project-item {
+    padding-bottom: 2em;
+    padding-top: 2em;
+    padding-right: 5em;
+    border-bottom: thin solid ${COLORS.TEXT.XLIGHT};
+    position: relative;
+
+    .delete-icon-container {
+      position: absolute;
+      right: 0;
+    }
+
+    &:first-child {
+      padding-top: unset;
+    }
+
+    &:last-child {
+      border-bottom: unset;
+    }
+  }
 `;
 
 export const H1 = styled.h1``;

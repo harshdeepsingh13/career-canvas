@@ -13,13 +13,10 @@ const config = require('./config/config');
 const v1Routes = require('./api/v1');
 const errorMiddleware = require('./middlewares/errorMiddleware');
 const mongooseConnection = require('./config/mongoose');
-const {pocFunction} = require("./services/puppeteer.service");
 
 const port = process.env.PORT || 8081;
 const app = express();
 const {logger} = config;
-
-pocFunction(require("./templates/templateOne").getTemplate());
 
 //middlewares
 app.use(Morgan('dev'));
@@ -29,6 +26,8 @@ app.use(express.urlencoded({extended: true}));
 //mongodb connection
 mongooseConnection();
 
+app.use("/api/v1/static", express.static('temp'));
+
 //API routes
 app.use("/api/v1", v1Routes)
 
@@ -37,10 +36,10 @@ app.use(errorMiddleware);
 
 //React
 if (process.env.MODE === 'production') {
-	app.use(express.static('./build'));
-	app.get('/*', (req, res) => {
-		res.sendFile(path.join(__dirname, './build/index.html'))
-	})
+    app.use(express.static('./build'));
+    app.get('/*', (req, res) => {
+        res.sendFile(path.join(__dirname, './build/index.html'))
+    })
 }
 
 app.listen(port, () => logger.info(`Server is running on port - ${port}`));

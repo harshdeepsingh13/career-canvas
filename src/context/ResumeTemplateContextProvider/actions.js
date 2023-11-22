@@ -1,7 +1,9 @@
 import {
     addNewResumeTemplateAPI,
+    downloadResumePdfAPI,
     fetchCertificatesAPI,
     fetchEducationDetailsAPI,
+    fetchPdfViewAPI,
     fetchProjectAPI,
     fetchResumeTemplatesAPI,
     fetchSkillsAPI,
@@ -68,10 +70,10 @@ export default (state, updateState, loaderSetters, pushToast) => {
                 loaderSetters.setFetchTemplatesLoader(false)
             }
         },
-        addResumeTemplate: async (successCallback) => {
+        addResumeTemplate: async (templateName, successCallback) => {
             try {
                 loaderSetters.setAddTemplateLoader(true);
-                await addNewResumeTemplateAPI();
+                await addNewResumeTemplateAPI({templateName});
                 successCallback && successCallback();
                 pushToast({text: "Resume Template added successfully", variant: "success"})
             } catch (e) {
@@ -114,16 +116,47 @@ export default (state, updateState, loaderSetters, pushToast) => {
                 loaderSetters.setCertificateAutofillLoader(false)
             }
         },
-        updateTemplate: async (templateId, data) => {
+        updateTemplate: async (templateId, data, successCallback) => {
             try {
                 loaderSetters.setUpdateTemplateLoader(true);
                 const {data: {data: responseData}} = await updateTemplateAPI(templateId, data);
                 pushToast({text: "Template updated successfully", variant: "success"})
+                successCallback && successCallback();
                 updateState({templateDetails: responseData.updated})
             } catch (e) {
                 pushToast({text: e?.response?.data?.message || "An error occurred!", variant: "danger"})
             } finally {
                 loaderSetters.setUpdateTemplateLoader(false)
+            }
+        },
+        fetchPdfView: async (selectedResumeTemplateId, templateViewId = 1, themeColor) => {
+            try {
+                loaderSetters.setFetchPdfViewLoader(true);
+                await fetchPdfViewAPI(selectedResumeTemplateId, templateViewId, themeColor)
+                // const file = new Blob(data, {type: "application/pdf"})
+                // updateState({pdfViewFile: file})
+            } catch (e) {
+                console.log("e", e);
+                pushToast({text: e?.response?.data?.message || "An error occurred!", variant: "danger"})
+            } finally {
+                loaderSetters.setFetchPdfViewLoader(false)
+            }
+        },
+        downloadResumePdf: async (selectedResumeTemplateId, templateViewId = 1, themeColor) => {
+            try {
+                loaderSetters.setDownloadResumePdfLoader(true);
+                const {data: blob} = await downloadResumePdfAPI(selectedResumeTemplateId, templateViewId, themeColor)
+                const blobUrl = window.URL.createObjectURL(blob);
+                const anchor = window.document.createElement('a');
+                anchor.download = "Resume.pdf";
+                anchor.href = blobUrl;
+                anchor.click();
+                window.URL.revokeObjectURL(blobUrl);
+            } catch (e) {
+                console.log("e", e);
+                pushToast({text: e?.response?.data?.message || "An error occurred!", variant: "danger"})
+            } finally {
+                loaderSetters.setDownloadResumePdfLoader(false);
             }
         }
     })

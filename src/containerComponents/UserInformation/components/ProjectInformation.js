@@ -10,7 +10,7 @@ import Button from "../../../components/Button";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlus, faTrash} from "@fortawesome/free-solid-svg-icons";
 
-const ProjectInformation = ({data, viewMode, onChangeData, onDeleteItem}) => {
+const ProjectInformation = ({data, viewMode, onChangeData, onDeleteItem, addRecord}) => {
     const [formData, setFormData] = useState(data);
 
     useEffect(() => {
@@ -20,9 +20,9 @@ const ProjectInformation = ({data, viewMode, onChangeData, onDeleteItem}) => {
     let isMounted = useRef(false);
 
     useEffect(() => {
-        if(!isMounted.current){
+        if (!isMounted.current) {
             isMounted.current = true;
-        } else{
+        } else {
             onChangeData && onChangeData(formData)
         }
     }, [formData]);
@@ -188,7 +188,7 @@ const ProjectInformation = ({data, viewMode, onChangeData, onDeleteItem}) => {
                     </div>
                 )}
             </>}
-            {viewMode === VIEW_MODE.EDIT &&
+            {(viewMode === VIEW_MODE.EDIT && addRecord) &&
                 <Button variant={"outline-primary"} onClick={onAddButtonClick} className={"add-record-button"}>
                     <FontAwesomeIcon icon={faPlus}/> Add Record
                 </Button>
@@ -201,12 +201,13 @@ ProjectInformation.propTypes = {
     data: PropTypes.object,
     viewMode: PropTypes.string,
     onChangeData: PropTypes.func,
-    onDeleteItem: PropTypes.func
-
+    onDeleteItem: PropTypes.func,
+    addRecord: PropTypes.bool
 };
 ProjectInformation.defaultProps = {
     data: {},
-    viewMode: "VIEW"
+    viewMode: "VIEW",
+    addRecord: true
 };
 
 export default ProjectInformation

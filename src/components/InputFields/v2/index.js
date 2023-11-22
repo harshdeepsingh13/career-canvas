@@ -334,6 +334,8 @@ const arePropsEqual = (prev, next) => prev.value === next.value &&
     prev.autofillLoader === next.autofillLoader &&
     prev.autofillItems === next.autofillItems
 
-export const SelectV2 = React.memo(SelectInput, arePropsEqual);
+const areSelectPropsEqual = (prev, next) => arePropsEqual(prev, next) && prev.children === next.children
+
+export const SelectV2 = React.memo(SelectInput, areSelectPropsEqual);
 export const CheckV2 = React.memo(InputCheck, arePropsEqual)
 export default React.memo(InputV2, arePropsEqual)

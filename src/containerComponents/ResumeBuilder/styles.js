@@ -2,7 +2,46 @@ import styled from "styled-components";
 import {COLORS} from "../../config/colors";
 
 export const ResumeBuilderWrapper = styled.div`
+  position: relative;
+`;
 
+export const ResumeTemplateWrapper = styled.div`
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  .template-details {
+    flex-basis: calc(100% - 630px);
+  }
+
+  .template-view-container {
+    width: 615px;
+    position: sticky;
+    top: 100px;
+
+    .download-btn-container {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 25%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgb(255, 255, 255);
+      background: -moz-linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 18%, rgba(1, 2, 32, 0.8758096988795518) 94%, rgba(1, 2, 32, 1) 100%);
+      background: -webkit-linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 18%, rgba(1, 2, 32, 0.8758096988795518) 94%, rgba(1, 2, 32, 1) 100%);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 18%, rgba(1, 2, 32, 0.8758096988795518) 94%, rgba(1, 2, 32, 1) 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffffff",endColorstr="#010220",GradientType=1);
+
+      .download-btn {
+        width: 250px;
+
+        svg {
+          margin-right: 1em;
+        }
+      }
+    }
+  }
 `;
 
 export const TemplateDetailsWrapper = styled.div`
@@ -23,10 +62,25 @@ export const TemplateDetailsWrapper = styled.div`
 
       .template-name-input {
         width: 300px;
+        display: flex;
+        align-items: center;
+
+        .form-label {
+          //flex-basis: 100%;
+          margin-right: 1em;
+
+        }
       }
+    }
+
+    .action-btn-container {
 
       .action-btn {
         margin-left: 1em;
+
+        svg {
+          margin-right: 10px;
+        }
       }
     }
   }

@@ -1,19 +1,19 @@
 const puppeteer = require("puppeteer");
 const fs = require("fs");
-const templateOne = require('../templates/templateOne')
 
-exports.pocFunction = async (template) => {
+exports.generatePDF = async (template) => {
     const browser = await puppeteer.launch({});
     try {
         const page = await browser.newPage();
         await page.setContent(template);
 
-         await page.pdf({
+          await page.pdf({
             path: "temp/temp.pdf",
-            format: 'a4',
+            format: 'letter',
             printBackground: true,
-            displayHeaderFooter: true
+            // displayHeaderFooter: true
         });
+        // fs.writeFileSync("public/assets/temp/temp.pdf", pdf, {encoding: "binary", flag: "w"});
     } catch (e) {
         console.error(e);
     } finally {

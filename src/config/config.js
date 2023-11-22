@@ -104,6 +104,7 @@ module.exports = {
         PROFESSIONAL_SUMMARY: "/user/professionalSummary",
         RESUME_TEMPLATE: "/resumeTemplate",
         RESUME_TEMPLATE_ALL: "/resumeTemplate/all",
+        TEMPLATE_PDF_VIEW: "/resumeTemplate/pdfTemplate",
         UPDATE_USER_INFORMATION: {
             BASIC_INFORMATION: "/user/basicInformation",
             EDUCATION_INFORMATION: "/user/educationInformation",

@@ -1,10 +1,15 @@
+const {generatePDF} = require("../services/puppeteer.service");
+const moment = require("moment");
 const style = (themeColor = "#324b57") => `
 <style>
 :root {
-  --themeColor: #324b57;
+  --themeColor: ${themeColor};
   --headerBackgroundColor: #f2f2f2;
 }
 
+.ql-indent-1{
+margin-left:1em;
+}
 .p2em {
   padding: 2em;
 }
@@ -139,6 +144,11 @@ header .header-information {
     width: 49%;
 }
 
+.header-information.item-1 .information{
+    /*flex-basis: 50%;*/
+    width: 100%;
+}
+
 table.section {
   page-break-after: auto;
 }
@@ -193,7 +203,7 @@ table .content-container .header {
   width: 50%;
 }
 
-.section.skills ul {
+/*.section.skills ul {
   margin: unset;
   padding: unset;
   padding-left: 20px;
@@ -201,13 +211,232 @@ table .content-container .header {
 
 .section.skills li {
   padding: unset;
+}*/
+ul {
+  margin: unset;
+  padding: unset;
+  padding-left: 20px;
+}
+
+ul li {
+  padding: unset;
 }
 
 </style>
 `
 
 const html = (templateDetails = {}) => {
-    const {objective, educationDetails, skills, workExperience, projects, trainingCertifications} = templateDetails;
+    const {
+        name,
+        contactNumber,
+        email,
+        currentLocation,
+        website,
+        objective,
+        educationDetails,
+        skills,
+        workExperience,
+        projects,
+        trainingCertifications
+    } = templateDetails;
+
+    // let website = undefined;
+    const getHeaderInformation = () => {
+        const arr = [contactNumber, email, currentLocation, website].filter(item => item)
+
+        return `<div class="${"header-information item-" + arr.length}">
+            ${contactNumber ? `<div class="information">${contactNumber.contactNumber}</div>` : ""}
+            ${email ? `<div class="information">${email}</div>` : ""}
+            ${currentLocation ? `<div class="information">${currentLocation}</div>` : ""}
+            ${website ? `<div class="information">${website}</div>` : ""}
+        </div>`
+    }
+
+    const getSkills = () => {
+        const printSkills = (skills) => {
+            let str = ""
+            skills.forEach(skill => {
+                str += `<li>${skill}</li>`
+            })
+            return str;
+        }
+
+        if (skills.length > 5) {
+            const halfIndex = skills?.length / 2 - 1;
+            const firstHalf = skills?.slice(0, halfIndex);
+            const secondHalf = skills?.slice(halfIndex);
+
+            return `
+                <td class="pb1em">
+                    <ul>
+                        ${printSkills(firstHalf)}
+                    </ul>
+                </td>
+                <td class="pb1em">
+                    <ul>
+                        ${printSkills(secondHalf)}
+                    </ul>
+                </td>
+            `
+        } else {
+            return `
+                <td class="pb1em">
+                    <ul>
+                        ${printSkills(skills)}
+                    </ul>
+                </td>
+            `
+        }
+    }
+
+    const getWorkExperiences = () => {
+        let str = "";
+        for (let experience of workExperience) {
+            str += `
+                <tr class="content-container">
+                    <td>
+                        <table class="pb1em">
+                            <tr>
+                                <td class="header">
+                                    <strong>${experience.position}</strong>, ${experience.company}
+                                    <div class="align-right float-right">
+                                        ${moment(experience.startDate).format("MMMM, YYYY")} - ${experience.isPresent ? "Present" : moment(experience.endDate).format("MMMM, YYYY")}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>${experience.location}</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div>${experience.responsibilities}</div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            `
+        }
+        return str;
+    }
+
+    const getProjects = () => {
+        let str = "";
+
+        for (let project of projects) {
+            str += `
+                <tr class="content-container">
+                    <td>
+                        <table class="pb1em">
+                            <tr>
+                                <td class="header">
+                                    <strong>${project.name}</strong>
+                                    <div class="align-right float-right"> ${moment(project.startDate).format("MMMM, YYYY")} - ${project.isPresent ? "Present" : moment(project.endDate).format("MMMM, YYYY")}</div>
+                                </td>
+                            </tr>
+                            ${project.website ? `
+                                <tr>
+                                    <td>
+                                        Website: <a href="${project.website}" target="_blank"> ${project.website} </a>
+                                    </td>
+                                </tr>
+                                ` : ``
+            }
+                            ${project.technologyStack ? `
+                                <tr>
+                                    <td>
+                                        Tech Stack: <em>${project.technologyStack.map(s => `<span style="text-transform:capitalize;">${s}</span>`)}</em>
+                                    </td>
+                                </tr>
+                            ` : ``}
+                            <tr>
+                                <td>
+                                    <div>${project.summary}</div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            `
+        }
+        return str;
+    }
+
+    const getCertificates = () => {
+        let str = ""
+
+        for (let certificate of trainingCertifications) {
+            str += `
+                <tr class="content-container">
+                    <td>
+                        <table class="pb1em">
+                            <tr>
+                                <td class="header">
+                                    <strong>${certificate.name}</strong>
+                                    <div class="align-right float-right"> ${moment(certificate.startDate).format("MMMM, YYYY")} - ${certificate.isPresent ? "Present" : moment(certificate.endDate).format("MMMM, YYYY")}</div>
+                                </td>
+                            </tr>
+                            ${certificate.link ? `
+                                <tr>
+                                    <td>
+                                        Website: <a href="${certificate.link}" target="_blank"> ${certificate.link} </a>
+                                    </td>
+                                </tr>
+                                ` : ``
+            }
+                            <tr>
+                                <td>
+                                    <div>${certificate.summary}</div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            `
+        }
+        return str;
+    }
+
+    const getEducationDetails = () => {
+        let str = "";
+        for (let education of educationDetails) {
+            str += `
+                <tr class="content-container">
+                    <td>
+                        <table class="pb1em">
+                            <tr>
+                                <td class="header">
+                                    <strong>${education.course}</strong>
+                                    <div class="align-right float-right"> ${moment(education.startDate).format("MMMM, YYYY")} - ${education.isPresent ? "Present" : moment(education.endDate).format("MMMM, YYYY")}</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div>${education.instituteName}</div>
+                                </td>
+                            </tr>
+                            ${education.university ? `
+                                <tr>
+                                    <td>
+                                        <div>${education.university}</div>
+                                    </td>
+                                </tr>
+                            ` : ``}
+                            ${education.location ? `
+                                <tr>
+                                    <td>
+                                        <div>${education.location}</div>
+                                    </td>
+                                </tr>
+                            ` : ``}
+                        </table>
+                    </td>
+                </tr>
+            `
+        }
+        return str;
+    }
+
     return `
 
     <table>
@@ -241,28 +470,13 @@ const html = (templateDetails = {}) => {
                                 </tr>
                             </thead>
                             <tr class="content-container">
-                                <td class="pb1em">
-                                    <ul>
-                                        <li>1</li>
-                                        <li>2</li>
-                                        <li>3</li>
-                                        <li>7</li>
-                                    </ul>
-                                </td>
-                                <td class="pb1em">
-                                    <ul>
-                                        <li>4</li>
-                                        <li>5</li>
-                                        <li>6</li>
-                                        <li>8</li>
-                                    </ul>
-                                </td>
+                                ${getSkills()}
                             </tr>
                         </table>
                     ` : ``}
 
                     ${(workExperience && workExperience.length > 0) ? `
-                    <table class="section work-experiences">
+                        <table class="section work-experiences">
                             <thead>
                                 <tr>
                                     <td>
@@ -270,40 +484,7 @@ const html = (templateDetails = {}) => {
                                     </td>
                                 </tr>
                             </thead>
-                            <tr class="content-container">
-                                <td>
-                                    <table class="pb1em">
-                                        <tr>
-                                            <td class="header">
-                                                <strong>Position</strong>, Company name
-                                                <div class="align-right float-right">Duration</div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div>responsibilities</div>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-                            <tr class="content-container">
-                                <td>
-                                    <table class="pb1em">
-                                        <tr>
-                                            <td class="header">
-                                                <strong>Position</strong>, Company name
-                                                <div class="align-right float-right">Duration</div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div>responsibilities</div>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
+                            ${getWorkExperiences()}
                         </table>
                     ` : ``}
 
@@ -316,23 +497,7 @@ const html = (templateDetails = {}) => {
                                         </td>
                                     </tr>
                                 </thead>
-                                <tr class="content-container">
-                                    <td>
-                                        <table class="pb1em">
-                                            <tr>
-                                                <td class="header">
-                                                    <strong>Project Name</strong>
-                                                    <div class="align-right float-right">Duration</div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div>responsibilities</div>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
+                                ${getProjects()}
                             </table>
                     ` : ``}
 
@@ -345,23 +510,7 @@ const html = (templateDetails = {}) => {
                                         </td>
                                     </tr>
                                 </thead>
-                            <tr class="content-container">
-                                <td>
-                                    <table class="pb1em">
-                                        <tr>
-                                            <td class="header">
-                                                <strong>Certifcate Name</strong>
-                                                <div class="align-right float-right">Duration</div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div>responsibilities</div>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
+                                ${getCertificates()}
                         </table>
                         ` : ``}
 
@@ -374,33 +523,7 @@ const html = (templateDetails = {}) => {
                                         </td>
                                     </tr>
                                 </thead>
-                                <tr class="content-container">
-                                    <td>
-                                        <table class="pb1em">
-                                            <tr>
-                                                <td class="header">
-                                                    <strong>CourseName</strong>
-                                                    <div class="align-right float-right">Duration</div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div>institude name</div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div>university name</div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div>responsibilities</div>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
+                                ${getEducationDetails()}
                             </table>
                         ` : ``}
                     </main>
@@ -417,13 +540,8 @@ const html = (templateDetails = {}) => {
     </table>
 
     <header class="plr2em pb2em">
-        <h1 class="name">Harshdeep Singh</h1>
-        <div class="header-information item-4">
-            <div class="information">1</div>
-            <div class="information">2</div>
-            <div class="information">3</div>
-            <div class="information">4</div>
-        </div>
+        <h1 class="name">${name}</h1>
+       ${getHeaderInformation()}
     </header>
 
     <footer></footer>
@@ -431,5 +549,9 @@ const html = (templateDetails = {}) => {
 }
 
 exports.getTemplate = (templateDetails, themeColor) => {
-    return style(themeColor) + "\n" + html();
+    return style(themeColor) + "\n" + html(templateDetails);
+}
+
+exports.generator = async (templateDetails, themeColor) => {
+    await generatePDF(this.getTemplate(templateDetails, themeColor))
 }

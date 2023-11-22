@@ -109,3 +109,16 @@ export const updateTemplateAPI = (templateId, data) => axiosInstance({
     url: API_ROUTES.RESUME_TEMPLATE + "/" + templateId,
     data
 })
+
+export const fetchPdfViewAPI = (selectedResumeTemplateId, templateViewId, themeColor) => axiosInstance({
+    method: "GET",
+    url: API_ROUTES.TEMPLATE_PDF_VIEW + "/" + templateViewId,
+    params: {id: selectedResumeTemplateId, themeColor}
+})
+
+export const downloadResumePdfAPI = (selectedResumeTemplateId, templateViewId, themeColor) => axiosInstance({
+    method: "GET",
+    url: `${API_ROUTES.TEMPLATE_PDF_VIEW}/${templateViewId}/download`,
+    params: {id: selectedResumeTemplateId, themeColor},
+    responseType: "blob"
+})

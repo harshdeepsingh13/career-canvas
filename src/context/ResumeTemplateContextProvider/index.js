@@ -15,7 +15,8 @@ const initState = {
     educationAutofillItems: [],
     templates: [],
     certificateAutofillItems: [],
-    templateDetails: {}
+    templateDetails: {},
+    pdfViewFile: ""
 };
 
 const ResumeTemplateContextProvider = ({children}) => {
@@ -31,6 +32,8 @@ const ResumeTemplateContextProvider = ({children}) => {
     const [educationAutofillLoader, setEducationAutofillLoader] = useState(false);
     const [certificateAutofillLoader, setCertificateAutofillLoader] = useState(false);
     const [updateTemplateLoader, setUpdateTemplateLoader] = useState(false);
+    const [fetchPdfViewLoader, setFetchPdfViewLoader] = useState(false);
+    const [downloadResumePdfLoader, setDownloadResumePdfLoader] = useState(false);
 
     const {pushToast} = useToastContext();
 
@@ -48,7 +51,9 @@ const ResumeTemplateContextProvider = ({children}) => {
         setFetchTemplateDetailsLoader,
         setEducationAutofillLoader,
         setCertificateAutofillLoader,
-        setUpdateTemplateLoader
+        setUpdateTemplateLoader,
+        setFetchPdfViewLoader,
+        setDownloadResumePdfLoader
     }, pushToast), [state, updateState]);
 
 
@@ -65,9 +70,11 @@ const ResumeTemplateContextProvider = ({children}) => {
             fetchTemplateDetailsLoader,
             educationAutofillLoader,
             certificateAutofillLoader,
-            updateTemplateLoader
+            updateTemplateLoader,
+            fetchPdfViewLoader,
+            downloadResumePdfLoader,
         }
-    }), [enhancedActions, state, fetchSummaryLoader, skillsAutofillLoader, updateState, workExperienceAutofillLoader, projectAutofillLoader, fetchTemplatesLoader, addTemplateLoader, fetchTemplateDetailsLoader, educationAutofillLoader, certificateAutofillLoader, updateTemplateLoader]);
+    }), [enhancedActions, state, fetchSummaryLoader, skillsAutofillLoader, updateState, workExperienceAutofillLoader, projectAutofillLoader, fetchTemplatesLoader, addTemplateLoader, fetchTemplateDetailsLoader, educationAutofillLoader, certificateAutofillLoader, updateTemplateLoader, fetchPdfViewLoader, downloadResumePdfLoader]);
 
     return <>
         <ResumeTemplateContext.Provider value={value}>

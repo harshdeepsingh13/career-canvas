@@ -1,5 +1,7 @@
 const {getTemplates, addNewTemplate, getTemplateDetails, updateTemplate} = require("./template.model");
 const {getBasicInformation} = require("../User/user.model");
+const {getTemplateById} = require("../../../templates");
+const path = require("path");
 
 exports.getTemplatesController = async (req, res, next) => {
     try {
@@ -48,6 +50,36 @@ exports.updateTemplateController = async (req, res, next) => {
         res.status(200).json({message: "Template updated successfully", data: {updated: updatedTemplate}})
 
     } catch (e) {
+        req.error = {status: 500, message: "An Error occurred!"}
+        return next(new Error());
+    }
+}
+
+exports.getPDFTemplateController = async (req, res, next) => {
+    try {
+        const {id: pdfTemplateId} = req.params;
+        const {id: selectedResumeTemplateId, themeColor} = req.query;
+
+        if (req.path.includes("/download")) {
+            res.download(path.resolve(__dirname, '../../../temp/temp.pdf'))
+        } else {
+            const {email} = req.user;
+            const resumeTemplateDetails = await getTemplateDetails(email, selectedResumeTemplateId)
+            const basicUserInformation = await getBasicInformation(email, {
+                website: 1,
+                contactNumber: 1,
+                currentLocation: 1,
+                email: 1,
+                name: 1,
+                _id: 0
+            })
+
+            const {generator} = getTemplateById(pdfTemplateId);
+            await generator({...resumeTemplateDetails._doc, ...basicUserInformation._doc}, themeColor)
+            res.status(200).sendFile(path.resolve(__dirname, '../../../temp/temp.pdf'))
+        }
+    } catch (e) {
+        console.log("e", e);
         req.error = {status: 500, message: "An Error occurred!"}
         return next(new Error());
     }

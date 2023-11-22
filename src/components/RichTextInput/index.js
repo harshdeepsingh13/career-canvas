@@ -4,13 +4,14 @@ import {RichTextInputWrapper} from "./styles";
 import ReactQuill from "react-quill";
 import {LabelWrapper} from "../InputFields/v2/styles";
 
-const RichTextInput = ({value, label, placeholder, groupClassName, readOnly, onChange}) => {
+const RichTextInput = ({value, label, placeholder, groupClassName, readOnly, onChange, showActionsOnReadOnly}) => {
 
     const [myInputValue, setMyInputValue] = useState(value);
 
     useEffect(() => {
         setMyInputValue(value)
     }, [value]);
+
     const handleChange = (value) => {
         setMyInputValue(value);
         onChange && onChange(value);
@@ -22,13 +23,17 @@ const RichTextInput = ({value, label, placeholder, groupClassName, readOnly, onC
                 label &&
                 <LabelWrapper>{label}</LabelWrapper>
             }
-            <ReactQuill
-                theme="snow"
-                value={myInputValue}
-                onChange={handleChange}
-                placeholder={placeholder}
-                readOnly={readOnly}
-            />
+            {
+                (!showActionsOnReadOnly && readOnly) ?
+                    <div className="text-read-only" dangerouslySetInnerHTML={{__html: myInputValue}} /> :
+                    <ReactQuill
+                        theme="snow"
+                        value={myInputValue}
+                        onChange={handleChange}
+                        placeholder={placeholder}
+                        readOnly={readOnly}
+                    />
+            }
         </RichTextInputWrapper>
     </>
 };
@@ -39,11 +44,13 @@ RichTextInput.propTypes = {
     placeholder: PropTypes.string,
     groupClassName: PropTypes.string,
     readOnly: PropTypes.bool,
-    onChange: PropTypes.func
+    onChange: PropTypes.func,
+    showActionsOnReadOnly: PropTypes.bool
 };
 RichTextInput.defaultProps = {
     value: "",
-    readOnly: false
+    readOnly: false,
+    showActionsOnReadOnly: false
 };
 
 export default RichTextInput
