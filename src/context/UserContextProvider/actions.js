@@ -44,7 +44,7 @@ export default (state, updateState, loaderSetters, pushToast) => {
             try {
                 loaderSetters.setFetchUserDetailsLoader(true);
                 const {data: {data: userDetails}} = await fetchUserDetailsAPI();
-                setUserDetails({name: userDetails.name, rollbackSeconds: userDetails.rollbackSeconds});
+                // setUserDetails({name: userDetails.name, rollbackSeconds: userDetails.rollbackSeconds});
                 updateState({userDetails});
                 successCallback && successCallback(userDetails);
             } catch (e) {

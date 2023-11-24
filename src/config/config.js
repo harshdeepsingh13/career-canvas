@@ -95,12 +95,12 @@ module.exports = {
         REGISTER_USER: "/user/register",
         LOGIN_USER: "/user/login",
         COMPLETE_USER_DETAILS: "/user/completeInformation",
-        USER_DETAILS: "/user",
-        UPDATE_USER: "/user",
-        UPLOAD_AUDIO: "/music",
-        FETCH_MEDIA: "/music",
-        DELETE_MEDIA: (id) => `/music/${id}`,
-        RENAME_MEDIA: id => `/music/rename/${id}`,
+        USER_DETAILS: "/user/basicInformation",
+        // UPDATE_USER: "/user",
+        // UPLOAD_AUDIO: "/music",
+        // FETCH_MEDIA: "/music",
+        // DELETE_MEDIA: (id) => `/music/${id}`,
+        // RENAME_MEDIA: id => `/music/rename/${id}`,
         PROFESSIONAL_SUMMARY: "/user/professionalSummary",
         RESUME_TEMPLATE: "/resumeTemplate",
         RESUME_TEMPLATE_ALL: "/resumeTemplate/all",
@@ -112,7 +112,8 @@ module.exports = {
             WORK_EXPERIENCE_INFORMATION: "/user/workExperienceInformation",
             TRAINING_INFORMATION: "/user/trainingInformation",
             PROJECT_INFORMATION: "/user/projectInformation",
-        }
+        },
+        JOB_SEARCH: "/jobs/search"
     },
     EDUCATION_TYPES: {
         secondary: "secondary",

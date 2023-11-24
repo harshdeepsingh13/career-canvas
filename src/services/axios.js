@@ -122,3 +122,9 @@ export const downloadResumePdfAPI = (selectedResumeTemplateId, templateViewId, t
     params: {id: selectedResumeTemplateId, themeColor},
     responseType: "blob"
 })
+
+export const jobSearchAPI = query => axiosInstance({
+    method: "GET",
+    url: API_ROUTES.JOB_SEARCH,
+    params: query
+})
