@@ -1,13 +1,13 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
-import {PageViewContainer} from "../../config/globalStyles";
+import {PageHeader, PageViewContainer} from "../../config/globalStyles";
 import {RegisterWrapper} from "./styles";
 import InputV2, {SelectV2} from "../../components/InputFields/v2";
 import {validateEmail, validatePassword, validatePhoneNumber} from "../../services/helpers";
-import {Button} from "react-bootstrap";
 import _ from "lodash";
 import {useUserContext} from "../../context/UserContextProvider";
 import Loader, {LOADER_SIZE} from "../../components/Loader";
+import Button from "../../components/Button";
 
 const Register = props => {
 
@@ -99,6 +99,7 @@ const Register = props => {
         {registerUserLoader && <Loader size={LOADER_SIZE.LARGE}/>}
         <PageViewContainer>
             <RegisterWrapper>
+                <PageHeader>Register</PageHeader>
                 <InputV2
                     type={"text"}
                     id={"name"}
@@ -388,7 +389,7 @@ const Register = props => {
                     </SelectV2>
                 </InputV2>
 
-                <Button onClick={onRegisterClick}>
+                <Button onClick={onRegisterClick} variant={"primary"} className={"create-user-button"}>
                     Create New User
                 </Button>
 

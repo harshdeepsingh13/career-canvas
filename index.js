@@ -26,6 +26,8 @@ app.use(express.urlencoded({extended: true}));
 //mongodb connection
 mongooseConnection();
 
+app.use("/api/v1/static", express.static('temp'));
+
 //API routes
 app.use("/api/v1", v1Routes)
 
@@ -34,10 +36,10 @@ app.use(errorMiddleware);
 
 //React
 if (process.env.MODE === 'production') {
-	app.use(express.static('./build'));
-	app.get('/*', (req, res) => {
-		res.sendFile(path.join(__dirname, './build/index.html'))
-	})
+    app.use(express.static('./build'));
+    app.get('/*', (req, res) => {
+        res.sendFile(path.join(__dirname, './build/index.html'))
+    })
 }
 
 app.listen(port, () => logger.info(`Server is running on port - ${port}`));

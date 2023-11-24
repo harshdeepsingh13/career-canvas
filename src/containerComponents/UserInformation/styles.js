@@ -14,28 +14,8 @@ export const UserInformationTabsWrapper = styled(Col)`
 `
 
 export const TabContentWrapper = styled(Col)`
-  .education-item, .work-experience-item, .training-item, .project-item {
-    padding-bottom: 2em;
-    padding-top: 2em;
-    padding-right: 5em;
-    border-bottom: thin solid ${COLORS.TEXT.XLIGHT};
-    position: relative;
 
-    .delete-icon-container{
-      position: absolute;
-      right: 0;
-    }
-
-    &:first-child{
-      padding-top: unset;
-    }
-
-    &:last-child {
-      border-bottom: unset;
-    }
-  }
-
-  .add-record-button{
+  .add-record-button {
     margin: 1em 0;
     position: relative;
     left: 50%;

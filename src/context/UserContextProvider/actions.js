@@ -33,7 +33,7 @@ export default (state, updateState, loaderSetters, pushToast) => {
             } catch (e) {
                 console.log("e.response.data", e.response.data);
                 if (e.response.data.status === 404) {
-                    emailPasswordErrorCallback(e.response.data.message);
+                    emailPasswordErrorCallback && emailPasswordErrorCallback(e.response.data.message);
                 } else
                     pushToast({text: e?.response?.data?.message || "An error occurred!", variant: "danger"})
             } finally {
@@ -44,7 +44,7 @@ export default (state, updateState, loaderSetters, pushToast) => {
             try {
                 loaderSetters.setFetchUserDetailsLoader(true);
                 const {data: {data: userDetails}} = await fetchUserDetailsAPI();
-                setUserDetails({name: userDetails.name, rollbackSeconds: userDetails.rollbackSeconds});
+                // setUserDetails({name: userDetails.name, rollbackSeconds: userDetails.rollbackSeconds});
                 updateState({userDetails});
                 successCallback && successCallback(userDetails);
             } catch (e) {

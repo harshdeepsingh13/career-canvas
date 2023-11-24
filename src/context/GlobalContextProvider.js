@@ -3,6 +3,7 @@ import AuthenticationContextProvider from "./AuthorizationContext";
 import ToastContextProvider from "./ToastContext";
 import UserContextProvider from "./UserContextProvider";
 import ResumeTemplateContextProvider from "./ResumeTemplateContextProvider";
+import JobSearchContextProvider from "./JobSearchContext";
 
 const GlobalContextProvider = ({children}) => {
     return <>
@@ -10,7 +11,9 @@ const GlobalContextProvider = ({children}) => {
             <AuthenticationContextProvider>
                 <UserContextProvider>
                     <ResumeTemplateContextProvider>
-                        {children}
+                        <JobSearchContextProvider>
+                            {children}
+                        </JobSearchContextProvider>
                     </ResumeTemplateContextProvider>
                 </UserContextProvider>
             </AuthenticationContextProvider>

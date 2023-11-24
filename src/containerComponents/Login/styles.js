@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
 export const LoginWrapper = styled.div`
+  width: 75%;
+  margin: auto;
 
   .create-account-link {
     display: block;

@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import {LoginWrapper} from "./styles";
 import InputV2 from "../../components/InputFields/v2";
-import {PageViewContainer} from "../../config/globalStyles";
+import {PageHeader, PageViewContainer} from "../../config/globalStyles";
 import Button from "../../components/Button";
 import {checkEmail, checkPassword, validateEmail, validatePassword} from "../../services/helpers";
 import {Link} from "react-router-dom";
@@ -58,6 +58,7 @@ const Login = props => {
         {registerUserLoader && <Loader/>}
         <PageViewContainer>
             <LoginWrapper>
+                <PageHeader>Login</PageHeader>
                 <InputV2
                     type={"email"}
                     id={"email"}

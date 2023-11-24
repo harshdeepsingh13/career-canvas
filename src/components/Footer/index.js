@@ -12,7 +12,7 @@ const Footer = props => {
         <Link to={"/"}><Logo mode={LOGO_MODE.LONG}/></Link>
       </H2>
       <p className="footer-body">
-        &copy; Copyright 2023 | Harshdeep Singh
+        &copy; Copyright 2023
       </p>
     </FooterWrapper>
   </>

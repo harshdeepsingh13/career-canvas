@@ -84,3 +84,47 @@ export const fetchProjectAPI = q => axiosInstance({
 });
 
 export const fetchResumeTemplatesAPI = () => axiosInstance({method: "GET", url: API_ROUTES.RESUME_TEMPLATE_ALL})
+
+export const addNewResumeTemplateAPI = data => axiosInstance({method: "POST", url: API_ROUTES.RESUME_TEMPLATE, data})
+
+export const fetchTemplateDetailsAPI = templateId => axiosInstance({
+    method: "GET",
+    url: API_ROUTES.RESUME_TEMPLATE + "/" + templateId
+})
+
+export const fetchEducationDetailsAPI = q => axiosInstance({
+    method: "GET",
+    url: API_ROUTES.UPDATE_USER_INFORMATION.EDUCATION_INFORMATION,
+    params: {q}
+})
+
+export const fetchCertificatesAPI = q => axiosInstance({
+    method: "GET",
+    url: API_ROUTES.UPDATE_USER_INFORMATION.TRAINING_INFORMATION,
+    params: {q}
+})
+
+export const updateTemplateAPI = (templateId, data) => axiosInstance({
+    method: "PUT",
+    url: API_ROUTES.RESUME_TEMPLATE + "/" + templateId,
+    data
+})
+
+export const fetchPdfViewAPI = (selectedResumeTemplateId, templateViewId, themeColor) => axiosInstance({
+    method: "GET",
+    url: API_ROUTES.TEMPLATE_PDF_VIEW + "/" + templateViewId,
+    params: {id: selectedResumeTemplateId, themeColor}
+})
+
+export const downloadResumePdfAPI = (selectedResumeTemplateId, templateViewId, themeColor) => axiosInstance({
+    method: "GET",
+    url: `${API_ROUTES.TEMPLATE_PDF_VIEW}/${templateViewId}/download`,
+    params: {id: selectedResumeTemplateId, themeColor},
+    responseType: "blob"
+})
+
+export const jobSearchAPI = query => axiosInstance({
+    method: "GET",
+    url: API_ROUTES.JOB_SEARCH,
+    params: query
+})

@@ -63,6 +63,19 @@ const PersonalInformation = ({data, viewMode, onChangeData}) => {
             </DataFieldWrapper>
 
             <DataFieldWrapper>
+                <InputBadges
+                    name={"tags"}
+                    id={"tags"}
+                    label={"Professional Tags"}
+                    placeholder={"Professional Tags"}
+                    groupClassName={"data-field-container"}
+                    readOnly={viewMode === VIEW_MODE.VIEW}
+                    badges={value?.tags}
+                    onChange={value => onChangeFormData("tags", value)}
+                />
+            </DataFieldWrapper>
+
+            <DataFieldWrapper>
                 <InputV2
                     id={"objective"}
                     name={"objective"}
@@ -76,19 +89,6 @@ const PersonalInformation = ({data, viewMode, onChangeData}) => {
                     groupClassName={"data-field-container"}
                 />
             </DataFieldWrapper>
-
-            {/*<DataFieldWrapper>
-                <InputBadges
-                    id={"tag"}
-                    name={"tag"}
-                    badges={value?.tags}
-                    label={"Profile Tags"}
-                    placeholder={"Profile Tags"}
-                    readOnly={viewMode === VIEW_MODE.VIEW}
-                    groupClassName={"data-field-container"}
-                    max={2}
-                />
-            </DataFieldWrapper>*/}
 
             <DataFieldWrapper>
                 <InputV2

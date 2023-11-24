@@ -4,6 +4,7 @@ import {COLORS} from "../../config/colors";
 import CustomBadge from "../CustomBadge";
 
 export const InputBadgesWrapper = styled(Form.Group)`
+  margin: 10px 0;
 
   .badge-form-container {
     width: 100%;
@@ -43,6 +44,7 @@ export const BadgeItemWrapper = styled(CustomBadge)`
   font-weight: normal;
   cursor: default;
   position: relative;
+  text-transform: capitalize;
 
   .click-action-helper {
     display: none;

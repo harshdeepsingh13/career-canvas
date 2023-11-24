@@ -6,7 +6,7 @@ export const UserContext = createContext({});
 
 export const useUserContext = () => useContext(UserContext);
 
-const initState = {userAccountDetails: {}, userCompleteDetails: {}}
+const initState = {userDetails: {}, userCompleteDetails: {}}
 
 const UserContextProvider = ({children}) => {
 

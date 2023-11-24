@@ -2,8 +2,8 @@ import React from 'react';
 import {LogoWrapper} from "./styles";
 import PropTypes from "prop-types";
 
-export const LOGO_MODE = {STACKED: "STACKED", LONG: "LONG"}
-const LOGO_SOURCE = {[LOGO_MODE.STACKED]: "assets/logo.svg", [LOGO_MODE.LONG]: "assets/logo_long.svg"}
+export const LOGO_MODE = {STACKED: "STACKED", LONG: "LONG", ICON: "ICON"}
+const LOGO_SOURCE = {[LOGO_MODE.STACKED]: "assets/logo.svg", [LOGO_MODE.LONG]: "assets/logo_long.svg", [LOGO_MODE.ICON]: "assets/logo_icon.png"}
 
 const Logo = ({mode, className}) => {
   return <>

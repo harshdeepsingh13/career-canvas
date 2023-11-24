@@ -9,7 +9,7 @@ import Button from "../../../components/Button";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlus, faTrash} from "@fortawesome/free-solid-svg-icons";
 
-const EducationalInformation = ({data, viewMode, onChangeData, onDeleteItem}) => {
+const EducationalInformation = ({data, viewMode, onChangeData, onDeleteItem, addRecord}) => {
 
     const [formData, setFormData] = useState(data);
 
@@ -202,7 +202,7 @@ const EducationalInformation = ({data, viewMode, onChangeData, onDeleteItem}) =>
                     </div>
                 )}
             </>}
-            {viewMode === VIEW_MODE.EDIT &&
+            {(viewMode === VIEW_MODE.EDIT && addRecord) &&
                 <Button variant={"outline-primary"} onClick={onAddButtonClick} className={"add-record-button"}>
                     <FontAwesomeIcon icon={faPlus}/> Add Record
                 </Button>
@@ -215,11 +215,13 @@ EducationalInformation.propTypes = {
     data: PropTypes.object,
     viewMode: PropTypes.string,
     onChangeData: PropTypes.func,
-    onDeleteItem: PropTypes.func
+    onDeleteItem: PropTypes.func,
+    addRecord: PropTypes.bool
 };
 EducationalInformation.defaultProps = {
     data: {},
-    viewMode: "VIEW"
+    viewMode: "VIEW",
+    addRecord: true
 };
 
 export default EducationalInformation

@@ -44,7 +44,7 @@ module.exports = new mongoose.Schema(
         },
         socialMediaLinks: {
             type: SocialMediaLinksSchema
-        },
+        }
     },
     {
         timestamps: true

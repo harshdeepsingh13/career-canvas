@@ -18,6 +18,7 @@ export const GroupWrapper = styled(Form.Group)`
     }
 
     textarea {
+      min-height: 12em;
       padding: 6px 12px;
       width: 100%;
       border: 1px solid ${COLORS.TEXT.XLIGHT};
@@ -36,6 +37,7 @@ export const GroupWrapper = styled(Form.Group)`
     .autofill-items-container {
       position: absolute;
       top: calc(100% + 10px);
+      z-index: 102;
       width: 100%;
       background-color: ${COLORS.BASIC_SOLID.WHITE};
       border-radius: var(--bs-border-radius);
@@ -55,6 +57,28 @@ export const GroupWrapper = styled(Form.Group)`
 
         &:last-child {
           border: unset;
+        }
+
+        &.placeholder-item {
+          cursor: default;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          .placeholder-logo {
+            width: 50px;
+            margin-right: 1em;
+            opacity: 0.2;
+          }
+
+          .message {
+            color: ${COLORS.TEXT.MEDIUM};
+            font-style: italic;
+          }
+
+          &:hover {
+            background-color: initial;
+          }
         }
       }
     }

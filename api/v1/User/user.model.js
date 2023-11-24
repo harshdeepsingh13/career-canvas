@@ -90,7 +90,6 @@ exports.updateBasicInformation = (userEmail, basicInformation) => {
         tags,
         website
     } = basicInformation;
-    console.log("{email: userEmail}", {email: userEmail});
     return User.findOneAndUpdate(
         {email: userEmail},
         {
@@ -135,11 +134,11 @@ exports.updateEducationInformation = async (email, educationInformation) => {
     return updated;
 };
 
-exports.getEducationInformation = async email => {
+exports.getEducationInformation = async (email, q) => {
+    let filter = {user: email};
+    if (q) filter.instituteName = {$regex: "^" + q, $options: "i"}
     const educationInformation = await EducationDetail.find(
-        {
-            user: email
-        },
+        filter,
         {},
         {
             sort: {priority: 1}
@@ -208,7 +207,7 @@ exports.updateWorkExperiences = async (workExperiences, email) => {
 
 exports.getWorkExperiences = (email, q) => {
     let filter = {user: email};
-    if (q) filter.company = {$regex: q, $options: "i"}
+    if (q) filter.company = {$regex: "^" + q, $options: "i"}
     return WorkExperience.find(
         filter,
         {},
@@ -221,7 +220,7 @@ exports.getWorkExperiences = (email, q) => {
 
 exports.getProjectInformation = (email, q) => {
     let filter = {user: email};
-    if (q) filter.name = {$regex: q, $options: "i"}
+    if (q) filter.name = {$regex: "^" + q, $options: "i"}
     return Project.find(
         filter,
         {},
@@ -254,16 +253,17 @@ exports.updateProjectInformation = async (projects, email) => {
     return updated;
 };
 
-exports.getTrainingInformation = email =>
-    Training.find(
-        {
-            user: email
-        },
+exports.getTrainingInformation = (email, q) => {
+    let filter = {user: email};
+    if (q) filter.name = {$regex: "^" + q, $options: "i"}
+    return Training.find(
+        filter,
         {},
         {
             sort: {startDate: -1}
         }
     );
+};
 
 exports.updateTrainingInformation = async (trainings, email) => {
     const updated = [];

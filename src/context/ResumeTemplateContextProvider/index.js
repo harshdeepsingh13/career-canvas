@@ -11,17 +11,29 @@ const initState = {
     professionalSummary: "",
     skillsAutofillItems: [],
     workExperienceAutofillItems: [],
-    projectAutofillItems: []
+    projectAutofillItems: [],
+    educationAutofillItems: [],
+    templates: [],
+    certificateAutofillItems: [],
+    templateDetails: {},
+    pdfViewFile: ""
 };
 
 const ResumeTemplateContextProvider = ({children}) => {
 
     const [state, setState] = useState(initState);
     const [fetchTemplatesLoader, setFetchTemplatesLoader] = useState(false);
+    const [addTemplateLoader, setAddTemplateLoader] = useState(false);
     const [fetchSummaryLoader, setFetchSummaryLoader] = useState(false)
     const [skillsAutofillLoader, setSkillsAutofillLoader] = useState(false)
     const [workExperienceAutofillLoader, setWorkExperienceAutofillLoader] = useState(false);
     const [projectAutofillLoader, setProjectAutofillLoader] = useState(false);
+    const [fetchTemplateDetailsLoader, setFetchTemplateDetailsLoader] = useState(false);
+    const [educationAutofillLoader, setEducationAutofillLoader] = useState(false);
+    const [certificateAutofillLoader, setCertificateAutofillLoader] = useState(false);
+    const [updateTemplateLoader, setUpdateTemplateLoader] = useState(false);
+    const [fetchPdfViewLoader, setFetchPdfViewLoader] = useState(false);
+    const [downloadResumePdfLoader, setDownloadResumePdfLoader] = useState(false);
 
     const {pushToast} = useToastContext();
 
@@ -34,7 +46,14 @@ const ResumeTemplateContextProvider = ({children}) => {
         setSkillsAutofillLoader,
         setWorkExperienceAutofillLoader,
         setProjectAutofillLoader,
-        setFetchTemplatesLoader
+        setFetchTemplatesLoader,
+        setAddTemplateLoader,
+        setFetchTemplateDetailsLoader,
+        setEducationAutofillLoader,
+        setCertificateAutofillLoader,
+        setUpdateTemplateLoader,
+        setFetchPdfViewLoader,
+        setDownloadResumePdfLoader
     }, pushToast), [state, updateState]);
 
 
@@ -46,9 +65,16 @@ const ResumeTemplateContextProvider = ({children}) => {
             skillsAutofillLoader,
             workExperienceAutofillLoader,
             projectAutofillLoader,
-            fetchTemplatesLoader
+            fetchTemplatesLoader,
+            addTemplateLoader,
+            fetchTemplateDetailsLoader,
+            educationAutofillLoader,
+            certificateAutofillLoader,
+            updateTemplateLoader,
+            fetchPdfViewLoader,
+            downloadResumePdfLoader,
         }
-    }), [enhancedActions, state, fetchSummaryLoader, skillsAutofillLoader, updateState, workExperienceAutofillLoader, projectAutofillLoader, fetchTemplatesLoader]);
+    }), [enhancedActions, state, fetchSummaryLoader, skillsAutofillLoader, updateState, workExperienceAutofillLoader, projectAutofillLoader, fetchTemplatesLoader, addTemplateLoader, fetchTemplateDetailsLoader, educationAutofillLoader, certificateAutofillLoader, updateTemplateLoader, fetchPdfViewLoader, downloadResumePdfLoader]);
 
     return <>
         <ResumeTemplateContext.Provider value={value}>

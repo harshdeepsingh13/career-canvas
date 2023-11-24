@@ -34,15 +34,6 @@ export const HomeWrapper = styled.div`
   }
 
   .header-section {
-    .welcome {
-      color: ${COLORS.PRIMARY.BLUE};
-      text-align: center;
-      font-size: 15px;
-      font-style: normal;
-      font-weight: 400;
-      line-height: 133.023%; /* 19.953px */
-      margin-bottom: 24px;
-    }
 
     h2 {
       text-align: center;
