@@ -4,6 +4,7 @@ import ToastContextProvider from "./ToastContext";
 import UserContextProvider from "./UserContextProvider";
 import ResumeTemplateContextProvider from "./ResumeTemplateContextProvider";
 import JobSearchContextProvider from "./JobSearchContext";
+import CoverLetterContextProvider from "./CoverLetterContext";
 
 const GlobalContextProvider = ({children}) => {
     return <>
@@ -12,7 +13,9 @@ const GlobalContextProvider = ({children}) => {
                 <UserContextProvider>
                     <ResumeTemplateContextProvider>
                         <JobSearchContextProvider>
-                            {children}
+                            <CoverLetterContextProvider>
+                                {children}
+                            </CoverLetterContextProvider>
                         </JobSearchContextProvider>
                     </ResumeTemplateContextProvider>
                 </UserContextProvider>

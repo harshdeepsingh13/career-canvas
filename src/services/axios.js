@@ -128,3 +128,13 @@ export const jobSearchAPI = query => axiosInstance({
     url: API_ROUTES.JOB_SEARCH,
     params: query
 })
+
+export const generateCoverLetterAPI = (jobDescription, onNewData) => axiosInstance({
+    method: "GET",
+    url: API_ROUTES.GENERATE_COVER_LETTER,
+    data: {jobDescription},
+    responseType: 'stream',
+    onDownloadProgress: ({event: progressEvent}) => {
+        onNewData && onNewData(progressEvent?.currentTarget?.response)
+    }
+})

@@ -2,7 +2,7 @@ const authenticationMiddleware = require("../../../middlewares/authenticationMid
 const {scrapperController} = require("./scrapper.controller");
 const app = require("express").Router();
 
-app.get("/search", scrapperController)
+app.get("/search", authenticationMiddleware, scrapperController)
 // app.get("/search", authenticationMiddleware, scrapperController)
 
 module.exports = app;

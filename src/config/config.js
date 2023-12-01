@@ -113,7 +113,8 @@ module.exports = {
             TRAINING_INFORMATION: "/user/trainingInformation",
             PROJECT_INFORMATION: "/user/projectInformation",
         },
-        JOB_SEARCH: "/jobs/search"
+        GENERATE_COVER_LETTER: "/coverLetter/generate",
+        JOB_SEARCH: "/jobs/search",
     },
     EDUCATION_TYPES: {
         secondary: "secondary",

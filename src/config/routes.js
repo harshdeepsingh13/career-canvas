@@ -4,6 +4,7 @@ import Register from "../containerComponents/Register";
 import UserInformation from "../containerComponents/UserInformation";
 import JobSearch from "../containerComponents/JobSearch";
 import ResumeBuilder from "../containerComponents/ResumeBuilder";
+import CoverLetter from "../containerComponents/CoverLetter";
 /*import Templates from "../containerComponents/Templates";
 import Register from "../containerComponents/Register";
 import AllDetails from "../containerComponents/AllDetails";*/
@@ -14,7 +15,8 @@ export const ROUTES = {
     LOGIN: "/login",
     REGISTER: "/register",
     DETAILS: "/your-details",
-    JOBS: "/jobs"
+    JOBS: "/jobs",
+    COVER_LETTER: "/cover-letter"
 }
 
 export default [
@@ -57,6 +59,13 @@ export default [
     {
         path: ROUTES.JOBS,
         component: JobSearch,
+        header: true,
+        footer: true,
+        isPrivate: true
+    },
+    {
+        path: ROUTES.COVER_LETTER,
+        component: CoverLetter,
         header: true,
         footer: true,
         isPrivate: true

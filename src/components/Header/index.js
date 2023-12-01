@@ -10,8 +10,10 @@ import {useUserContext} from "../../context/UserContextProvider";
 import Loader from "../Loader";
 
 const navs = [
-    {text: "Build Resume", link: ROUTES.BUILD}, {text: "Your Details", link: ROUTES.DETAILS},
-    {text: "Job Search", link: ROUTES.JOBS}
+    {text: "Build Resume", link: ROUTES.BUILD},
+    {text: "Your Details", link: ROUTES.DETAILS},
+    {text: "Job Search", link: ROUTES.JOBS},
+    {text: "Cover Letter", link: ROUTES.COVER_LETTER}
 ]
 const Header = props => {
 
