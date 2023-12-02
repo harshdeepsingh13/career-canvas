@@ -245,7 +245,7 @@ const html = (templateDetails = {}) => {
         const arr = [contactNumber, email, currentLocation, website].filter(item => item)
 
         return `<div class="${"header-information item-" + arr.length}">
-            ${contactNumber ? `<div class="information">${contactNumber.contactNumber}</div>` : ""}
+            ${contactNumber ? `<div class="information">+${contactNumber.countryCode} ${contactNumber.contactNumber}</div>` : ""}
             ${email ? `<div class="information">${email}</div>` : ""}
             ${currentLocation ? `<div class="information">${currentLocation}</div>` : ""}
             ${website ? `<div class="information">${website}</div>` : ""}

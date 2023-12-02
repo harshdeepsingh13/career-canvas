@@ -8,6 +8,8 @@ import _ from "lodash";
 import {useUserContext} from "../../context/UserContextProvider";
 import Loader, {LOADER_SIZE} from "../../components/Loader";
 import Button from "../../components/Button";
+import {useNavigate} from "react-router";
+import {ROUTES} from "../../config/routes";
 
 const Register = props => {
 
@@ -22,6 +24,8 @@ const Register = props => {
     const {state: userState, actions: userActions, loaders: userLoaders} = useUserContext();
     const {registerUser} = userActions;
     const {registerUserLoader} = userLoaders;
+
+    const navigate = useNavigate();
 
     const validateRePassword = value => {
         if (value !== password) {
@@ -66,7 +70,10 @@ const Register = props => {
     const onRegisterClick = async () => {
         const data = {name, email, password, contactNumber: {countryCode, contactNumber: phoneNumber}}
         if (validateData(data)) {
-            await registerUser(data);
+            const successCallback = () => {
+                navigate(ROUTES.LOGIN);
+            }
+            await registerUser(data, successCallback);
         }
     }
 
