@@ -16,7 +16,7 @@ exports.getCoverLetter = async (skills, workExperiences, jobDescription, res) =>
     }
     const stream = await cohere.chatStream({
         model: "command",
-        message: message + "\n" + "Job Description: " + jobDescription + "\n I am applying for this job. Please create a cover letter for me in at least 1000 words. Only respond with cover letter nothing extra before or after it.\n",
+        message: message + "\n" + "Job Description: " + jobDescription + "\n I am applying for this job. Using my skills and work experience information, please create a cover letter for me in at least 1000 words to apply for the job. Only respond with cover letter nothing extra before or after it.\n",
         promptTruncation: "AUTO",
         citationQuality: "accurate",
         connectors: [],

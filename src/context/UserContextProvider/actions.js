@@ -16,7 +16,7 @@ export default (state, updateState, loaderSetters, pushToast) => {
                 loaderSetters.setRegisterUserLoader(true);
                 await registerUserAPI(userData);
                 pushToast({text: "Your account is completely setup!", variant: "success"})
-                successCallback();
+                successCallback && successCallback();
             } catch (e) {
                 pushToast({text: e?.response?.data?.message || "An error occurred!", variant: "danger"})
             } finally {
@@ -29,7 +29,7 @@ export default (state, updateState, loaderSetters, pushToast) => {
                 const {data: dataResponse} = await loginUserAPI(data);
                 setToken(dataResponse.data.token);
                 pushToast({text: "Login successful", variant: "success"});
-                successCallback();
+                successCallback && successCallback();
             } catch (e) {
                 console.log("e.response.data", e.response.data);
                 if (e.response.data.status === 404) {

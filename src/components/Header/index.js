@@ -27,7 +27,7 @@ const Header = props => {
     const {fetchUserDetailsLoader} = userLoaders;
 
     useEffect(() => {
-        if (!Object.keys(userDetails).length)
+        if (isAuthorized && !Object.keys(userDetails).length)
             fetchUserDetails();
     }, [isAuthorized, userDetails])
 

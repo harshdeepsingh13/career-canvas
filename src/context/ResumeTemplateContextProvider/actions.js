@@ -136,8 +136,8 @@ export default (state, updateState, loaderSetters, pushToast) => {
                 // const file = new Blob(data, {type: "application/pdf"})
                 // updateState({pdfViewFile: file})
             } catch (e) {
-                console.log("e", e);
-                pushToast({text: e?.response?.data?.message || "An error occurred!", variant: "danger"})
+                console.log("e###", e);
+                // pushToast({text: e?.response?.data?.message || "An error occurred!", variant: "danger"})
             } finally {
                 loaderSetters.setFetchPdfViewLoader(false)
             }

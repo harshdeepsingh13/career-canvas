@@ -14,9 +14,9 @@ const SkillsInformation = ({data, viewMode, onChangeData}) => {
     let isMounted = useRef(false);
 
     useEffect(() => {
-        if(!isMounted.current){
+        if (!isMounted.current) {
             isMounted.current = true;
-        } else{
+        } else {
             onChangeData && onChangeData(formData)
         }
     }, [formData]);
@@ -36,18 +36,21 @@ const SkillsInformation = ({data, viewMode, onChangeData}) => {
 
     return <>
         <SkillsInformationWrapper>
-            {value?.skills?.length === 0 && viewMode === VIEW_MODE.VIEW ? <NoRecordWrapper>
-                <p>Your skills details will come here. Add your details now</p>
-            </NoRecordWrapper> : <>
-                <InputBadges
-                    badges={value?.skills}
-                    badgeProps={{bg: "primary"}}
-                    clickAction={CLICK_ACTIONS.DELETE}
-                    placeholder={"Skills"}
-                    readOnly={viewMode === VIEW_MODE.VIEW}
-                    onChange={onChangeFormData}
-                />
-            </>}
+            {(!value?.skills || value?.skills?.length === 0) ?
+                <NoRecordWrapper>
+                    <p>Your skills details will come here. Add your details now</p>
+                </NoRecordWrapper> :
+                <>
+                    <InputBadges
+                        badges={value?.skills}
+                        badgeProps={{bg: "primary"}}
+                        clickAction={CLICK_ACTIONS.DELETE}
+                        placeholder={"Skills"}
+                        readOnly={viewMode === VIEW_MODE.VIEW}
+                        onChange={onChangeFormData}
+                    />
+                </>
+            }
 
             {/* {value?.skills?.map((skill, index) =>
                 <div className={"skill-item"} key={skill._id}>

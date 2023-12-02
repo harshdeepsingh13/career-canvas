@@ -112,6 +112,10 @@ exports.registerController = async (req, res, next) => {
         });
         logger.info(`[ user.controller.js ] User register successfully with email as ${email}`);
     } catch (e) {
+        if(e.code ===11000) {
+            req.error = {status: 409, message: "An account with this email already exists."}
+            return next(new Error());
+        }
         req.error = {status: 500, message: "An Error occurred!"}
         return next(new Error());
     }
@@ -249,15 +253,16 @@ exports.updateSkillInformationController = async (req, res, next) => {
 exports.getSkillInformationController = async (req, res, next) => {
     try {
         const {q} = req.query;
-        const {skills} = await getSkillInformation(req.user.email, q);
+        const skills = await getSkillInformation(req.user.email, q);
         res.status(200).json(
             {
                 status: 200,
                 message: "data successfully retrieved",
-                data: {skills}
+                data: skills?.skills || []
             }
         )
     } catch (e) {
+        console.log("e", e);
         req.error = {status: 500, message: "An Error occurred!"}
         return next(new Error());
     }
@@ -498,7 +503,7 @@ exports.getProfessionalSummaryController = async (req, res, next) => {
         const professionalSummary = await getBasicInformation(req.user.email, {objective: 1})
         res.status(200).json({
             message: "Professional Summary successfully retrieved",
-            data: {objective: professionalSummary?.objective}
+            data: {objective: professionalSummary?.objective || ""}
         })
     } catch (e) {
         req.error = {status: 500, message: "An Error occurred!"}
