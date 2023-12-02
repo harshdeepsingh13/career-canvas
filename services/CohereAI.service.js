@@ -8,10 +8,10 @@ const cohere = new CohereClient({
 exports.getCoverLetter = async (skills, workExperiences, jobDescription, res) => {
     res.write("");
     let message = "";
-    if (skills.length) {
+    if (skills?.length) {
         message += "My Skills: " + skills + "\n";
     }
-    if (workExperiences.length) {
+    if (workExperiences?.length) {
         message += "my work experiences: " + workExperiences + "\n"
     }
     const stream = await cohere.chatStream({
