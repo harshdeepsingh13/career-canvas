@@ -10,8 +10,8 @@ import {useUserContext} from "../../context/UserContextProvider";
 import Loader from "../Loader";
 
 const navs = [
-    {text: "Build Resume", link: ROUTES.BUILD},
     {text: "Your Details", link: ROUTES.DETAILS},
+    {text: "Build Resume", link: ROUTES.BUILD},
     {text: "Job Search", link: ROUTES.JOBS},
     {text: "Cover Letter", link: ROUTES.COVER_LETTER}
 ]
@@ -45,7 +45,7 @@ const Header = props => {
             {fetchUserDetailsLoader && <Loader message={"Getting your details"}/>}
             <Link to={"/"} className="logo-container"> <Logo/> </Link>
             <div className="nav-link-container">
-                {navs.map((nav, index) => <>
+                {isAuthorized && navs.map((nav, index) => <>
                     <NavLink
                         to={nav?.link || ""}
                         className={({isActive}) => `nav-link ${isActive && "active"}`}

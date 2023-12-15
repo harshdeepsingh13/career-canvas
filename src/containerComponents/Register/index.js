@@ -69,7 +69,7 @@ const Register = props => {
 
     const onRegisterClick = async () => {
         const data = {name, email, password, contactNumber: {countryCode, contactNumber: phoneNumber}}
-        if (validateData(data)) {
+        if ((rePassword && validateRePassword(rePassword)?.isValid) && validateData(data)) {
             const successCallback = () => {
                 navigate(ROUTES.LOGIN);
             }
