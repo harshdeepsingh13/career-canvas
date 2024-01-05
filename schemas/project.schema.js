@@ -30,7 +30,8 @@ module.exports = mongoose.Schema(
 		},
 		website: {
 			type: String
-		}
+		},
+    tagLine: String
 	},
 	{
 		timestamps: true
