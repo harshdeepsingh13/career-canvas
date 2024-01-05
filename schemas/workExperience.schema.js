@@ -27,7 +27,8 @@ module.exports = mongoose.Schema(
 		},
 		location: {
 			type: String
-		}
+		},
+    isFreelanceExperience: Boolean
 	},
 	{
 		timestamps: true

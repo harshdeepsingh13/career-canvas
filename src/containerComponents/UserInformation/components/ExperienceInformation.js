@@ -143,6 +143,21 @@ const ExperienceInformation = ({data, viewMode, onChangeData, onDeleteItem, addR
                             />
                         </DataFieldWrapper>
 
+                        <DataFieldWrapper>
+                            <CheckV2
+                                type={"switch"}
+                                id={"isFreelanceExperience"}
+                                name={"isFreelanceExperience"}
+                                checked={experience?.isFreelanceExperience}
+                                onChange={value => onChangeFormData(index, "isFreelanceExperience", !!value)}
+                                label={"Is Freelance Experience?"}
+                                placeholder={"Is Freelance Experience?"}
+                                disabled={viewMode === VIEW_MODE.VIEW}
+                                readOnly={viewMode === VIEW_MODE.VIEW}
+                                groupClassName={"data-field-container"}
+                            />
+                        </DataFieldWrapper>
+
                         {!experience?.isPresent &&
                             <DataFieldWrapper>
                                 <InputV2
