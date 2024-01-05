@@ -87,6 +87,20 @@ const ProjectInformation = ({data, viewMode, onChangeData, onDeleteItem, addReco
                             />
                         </DataFieldWrapper>
 
+                      <DataFieldWrapper>
+                        <InputV2
+                          id={"tagLine"}
+                          name={"tagLine"}
+                          value={project?.tagLine}
+                          onChange={value => onChangeFormData(index, "tagLine", value)}
+                          label={"Tag Line"}
+                          placeholder={"Tag Line"}
+                          disabled={viewMode === VIEW_MODE.VIEW}
+                          readOnly={viewMode === VIEW_MODE.VIEW}
+                          groupClassName={"data-field-container"}
+                        />
+                      </DataFieldWrapper>
+
                         <DataFieldWrapper>
                             <InputV2
                                 type={"date"}
