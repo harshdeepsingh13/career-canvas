@@ -30,7 +30,7 @@ const JOB_TYPE = {
     CONTRACT: "contract",
 }
 
-const ITEM_LIMIT = 50;
+const ITEM_LIMIT = 9;
 
 const JobSearch = props => {
 
