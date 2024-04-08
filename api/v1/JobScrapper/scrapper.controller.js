@@ -8,7 +8,7 @@ exports.scrapperController = async (req, res, next) => {
             dateSincePosted,
             remoteFilter,
             start = 0,
-            limit = 50
+            limit = 9
         } = req.query;
         const jobs = await linkedinScrapper.query({
             keyword,
