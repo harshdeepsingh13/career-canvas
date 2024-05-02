@@ -1,6 +1,8 @@
 const {CohereClient} = require("cohere-ai");
+const {cohereAiToken} = require("../config/config");
+
 const cohere = new CohereClient({
-    token: "uRurQa7mDOrscziPOLUMSuj03TKw9MxmcdhIBiu7",
+    token: cohereAiToken,
 });
 
 exports.getCoverLetter = async (skills, workExperiences, jobDescription, res) => {

@@ -38,5 +38,6 @@ module.exports = {
 		education: "education",
 		image: "image",
 
-	}
+	},
+  cohereAiToken: process.env.COHERE_AI_TOKEN
 }
