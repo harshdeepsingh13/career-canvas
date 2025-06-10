@@ -8,6 +8,7 @@ dotenv.config({path: env_file_path});*/
 const express = require('express');
 const fs = require('fs');
 const Morgan = require("morgan");
+const path = require("path");
 
 const config = require('./config/config');
 const v1Routes = require('./api/v1');
