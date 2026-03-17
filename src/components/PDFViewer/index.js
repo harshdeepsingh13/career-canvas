@@ -1,8 +1,13 @@
-import React, {useState} from 'react';
 import PropTypes from 'prop-types';
-import {PDFViewerWrapper} from "./styles";
-import {Document, Page} from "react-pdf";
-import {Pagination} from "react-bootstrap";
+import React, { useState } from 'react';
+import { Pagination } from "react-bootstrap";
+import { Document, Page, pdfjs } from "react-pdf";
+import { PDFViewerWrapper } from "./styles";
+
+pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+    'pdfjs-dist/build/pdf.worker.min.js',
+    import.meta.url,
+).toString();
 
 const PDFViewer = ({pdf, loading, onLoadSuccess, onLoadProgress}) => {
     const [numPages, setNumPages] = useState();

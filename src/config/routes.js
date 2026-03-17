@@ -1,10 +1,12 @@
-import Home from "../containerComponents/Home";
-import Login from "../containerComponents/Login";
-import Register from "../containerComponents/Register";
-import UserInformation from "../containerComponents/UserInformation";
-import JobSearch from "../containerComponents/JobSearch";
-import ResumeBuilder from "../containerComponents/ResumeBuilder";
-import CoverLetter from "../containerComponents/CoverLetter";
+import React from "react";
+
+const Home = React.lazy(() => import("../containerComponents/Home"));
+const Login = React.lazy(() => import("../containerComponents/Login"));
+const Register = React.lazy(() => import("../containerComponents/Register"));
+const UserInformation = React.lazy(() => import("../containerComponents/UserInformation"));
+const JobSearch = React.lazy(() => import("../containerComponents/JobSearch"));
+const ResumeBuilder = React.lazy(() => import("../containerComponents/ResumeBuilder"));
+const CoverLetter = React.lazy(() => import("../containerComponents/CoverLetter"));
 /*import Templates from "../containerComponents/Templates";
 import Register from "../containerComponents/Register";
 import AllDetails from "../containerComponents/AllDetails";*/

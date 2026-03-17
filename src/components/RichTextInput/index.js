@@ -1,8 +1,9 @@
-import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
-import {RichTextInputWrapper} from "./styles";
-import ReactQuill from "react-quill";
-import {LabelWrapper} from "../InputFields/v2/styles";
+import React, { Suspense, useEffect, useState } from 'react';
+import { LabelWrapper } from "../InputFields/v2/styles";
+import { RichTextInputWrapper } from "./styles";
+
+const ReactQuill = React.lazy(() => import('react-quill'));
 
 const RichTextInput = ({value, label, placeholder, groupClassName, readOnly, onChange, showActionsOnReadOnly}) => {
 
@@ -26,13 +27,15 @@ const RichTextInput = ({value, label, placeholder, groupClassName, readOnly, onC
             {
                 (!showActionsOnReadOnly && readOnly) ?
                     <div className="text-read-only" dangerouslySetInnerHTML={{__html: myInputValue}} /> :
-                    <ReactQuill
-                        theme="snow"
-                        value={myInputValue}
-                        onChange={handleChange}
-                        placeholder={placeholder}
-                        readOnly={readOnly}
-                    />
+                    <Suspense fallback={null}>
+                        <ReactQuill
+                            theme="snow"
+                            value={myInputValue}
+                            onChange={handleChange}
+                            placeholder={placeholder}
+                            readOnly={readOnly}
+                        />
+                    </Suspense>
             }
         </RichTextInputWrapper>
     </>

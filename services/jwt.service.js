@@ -3,7 +3,6 @@ const cryptojs = require("crypto-js");
 
 const jwtConfig = {
     issuer: "Harshdeep Singh",
-    subject: "harshdeepsingh13@gmail.com",
     audience: "",
     expiresIn: "12h",
     algorithm: "RS256"
@@ -11,7 +10,6 @@ const jwtConfig = {
 
 const signOptions = {
     issuer: jwtConfig.issuer,
-    subject: jwtConfig.subject,
     audience: jwtConfig.audience,
     // expiresIn: jwtConfig.expiresIn,
     // algorithm: jwtConfig.algorithm
@@ -19,7 +17,6 @@ const signOptions = {
 
 const verifyOptions = {
     issuer: jwtConfig.issuer,
-    subject: jwtConfig.subject,
     audience: jwtConfig.audience,
     // expiresIn: jwtConfig.expiresIn,
     // algorithm: [jwtConfig.algorithm]

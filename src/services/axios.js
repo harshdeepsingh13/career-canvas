@@ -1,6 +1,6 @@
 import axios from 'axios';
-import {getToken} from "./localStorage";
-import {API_ROUTES} from "../config/config";
+import { API_ROUTES } from "../config/config";
+import { getToken } from "./localStorage";
 
 const axiosInstance = axios.create({
     baseURL: API_ROUTES.BASE_URL_V1,
@@ -130,7 +130,7 @@ export const jobSearchAPI = query => axiosInstance({
 })
 
 export const generateCoverLetterAPI = (jobDescription, onNewData) => axiosInstance({
-    method: "GET",
+    method: "POST",
     url: API_ROUTES.GENERATE_COVER_LETTER,
     data: {jobDescription},
     responseType: 'stream',

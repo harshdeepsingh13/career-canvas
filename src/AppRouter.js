@@ -1,24 +1,26 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import {Route, Routes} from "react-router";
-import routes from "./config/routes";
+import { Suspense } from 'react';
+import { Route, Routes } from "react-router";
 import RouteWrapper from "./components/RouteWrapper";
+import routes from "./config/routes";
 
 const AppRouter = props => {
 	return <>
-		<Routes>
-			{
-				routes.map(({path, component: Component, ...rest}) => <Route
-						path={path}
-						element={
-							<RouteWrapper {...rest}>
-								<Component/>
-							</RouteWrapper>
-						}
-					/>
-				)
-			}
-		</Routes>
+		<Suspense fallback={null}>
+			<Routes>
+				{
+					routes.map(({path, component: Component, ...rest}) => <Route
+							path={path}
+							element={
+								<RouteWrapper {...rest}>
+									<Component/>
+								</RouteWrapper>
+							}
+						/>
+					)
+				}
+			</Routes>
+		</Suspense>
 	</>
 };
 

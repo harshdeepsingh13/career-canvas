@@ -24,12 +24,19 @@ const {
 } = require('./user.controller');
 const authenticationMiddleware = require("../../../middlewares/authenticationMiddleware");
 const portfolioTokenBlocker = require("../../../middlewares/portfolioTokenBlocker");
+const {createRateLimiter} = require("../../../middlewares/rateLimiter");
 
 const app = express.Router();
 
-app.post('/login', loginController);
+const authRateLimiter = createRateLimiter({
+    windowMs: 15 * 60 * 1000,
+    maxRequests: 20,
+    message: "Too many authentication attempts. Try again later."
+});
 
-app.post('/register', registerController);
+app.post('/login', authRateLimiter, loginController);
+
+app.post('/register', authRateLimiter, registerController);
 
 app.get('/basicInformation', authenticationMiddleware, portfolioTokenBlocker, getBasicInformationController);
 

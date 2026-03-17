@@ -7,9 +7,15 @@ exports.scrapperController = async (req, res, next) => {
             location,
             dateSincePosted,
             remoteFilter,
-            start = 0,
-            limit = 9
+            start: startParam = 0,
+            limit: limitParam = 9
         } = req.query;
+
+        const parsedStart = Number.parseInt(startParam, 10);
+        const parsedLimit = Number.parseInt(limitParam, 10);
+        const start = Number.isNaN(parsedStart) ? 0 : Math.max(0, parsedStart);
+        const limit = Number.isNaN(parsedLimit) ? 9 : Math.min(25, Math.max(1, parsedLimit));
+
         const jobs = await linkedinScrapper.query({
             keyword,
             location,

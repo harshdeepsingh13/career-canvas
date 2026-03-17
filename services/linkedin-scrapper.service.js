@@ -3,14 +3,13 @@ const axios = require("axios");
 
 module.exports.query = (queryObject) => {
     const query = new Query(queryObject);
-    console.log(query.url(0));
     return query.getJobs();
 };
 
 //transfers object values passed to our .query to an obj we can access
 function Query(queryObj) {
     //query vars
-    this.host = queryObj.host || "www.linkedin.com";
+    this.host = "www.linkedin.com";
 
     //api handles strings with spaces by replacing the values with %20
     this.keyword = queryObj.keyword?.replace(" ", "+") || "";
@@ -127,14 +126,13 @@ Query.prototype.getJobs = async function () {
         while (resultCount > 0) {
             //fetch our data using our url generator with
             //the page to start on
-            const { data } = await axios.get(this.url(start));
+            const { data } = await axios.get(this.url(start), { timeout: 10000 });
 
             //select data so we can check the number of jobs returned
             const $ = cheerio.load(data);
             const jobs = $("li");
             //if result count ends up being 0 we will stop getting more jobs
             resultCount = jobs.length;
-            console.log("I got ", jobs.length, " jobs");
 
             //to get the job data as objects with the desired details
             parsedJobs = parseJobList(data);
@@ -153,7 +151,7 @@ Query.prototype.getJobs = async function () {
         //console.log(allJobs)
         return allJobs;
     } catch (error) {
-        console.error(error);
+        throw error;
     }
 };
 function parseJobList(jobData) {
@@ -179,7 +177,6 @@ function parseJobList(jobData) {
             const jobUrl = job.find(".base-card__full-link").attr("href") || "";
             const companyLogo =
                 job.find(".artdeco-entity-image").attr("data-delayed-url") || "";
-            console.log("companyLogo", companyLogo);
             const agoTime =
                 job.find(".job-search-card__listdate").text().trim() || "";
             return {

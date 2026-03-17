@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const {escapeRegex, sanitizeDocument} = require("../../../config/helpers");
 const UserSchema = require('../../../schemas/user.schema');
 const EducationsSchema = require("../../../schemas/educations.schema");
 const WorkExperienceSchema = require("../../../schemas/workExperience.schema");
@@ -65,7 +66,7 @@ exports.getUser = (email, wantPassword = false) => {
 
     return User.findOne(
         {
-            email
+            email: String(email)
         },
         projectionObject
     );
@@ -126,7 +127,7 @@ exports.updateEducationInformation = async (email, educationInformation) => {
     for (let education of educationInformation) {
         const updatedRecord = await EducationDetail.findOneAndUpdate(
             {user: email, _id: education._id},
-            {...education},
+            {$set: sanitizeDocument({...education})},
             {upsert: true, new: true}
         );
         updated.push(updatedRecord);
@@ -136,7 +137,7 @@ exports.updateEducationInformation = async (email, educationInformation) => {
 
 exports.getEducationInformation = async (email, q) => {
     let filter = {user: email};
-    if (q) filter.instituteName = {$regex: "^" + q, $options: "i"}
+    if (q) filter.instituteName = {$regex: "^" + escapeRegex(q), $options: "i"}
     const educationInformation = await EducationDetail.find(
         filter,
         {},
@@ -167,7 +168,7 @@ exports.getSkillInformation = async (email, q) => {
                             cond: {
                                 $regexMatch: {
                                     input: "$$skill",
-                                    regex: new RegExp("^" + q),
+                                    regex: new RegExp("^" + escapeRegex(q)),
                                     options: "i"
                                 }
                             }
@@ -192,7 +193,7 @@ exports.updateWorkExperiences = async (workExperiences, email) => {
                 _id: workExperience._id
             },
             {
-                ...workExperience,
+                $set: sanitizeDocument({...workExperience}),
             },
             {
                 new: true,
@@ -207,7 +208,7 @@ exports.updateWorkExperiences = async (workExperiences, email) => {
 
 exports.getWorkExperiences = (email, q) => {
     let filter = {user: email};
-    if (q) filter.company = {$regex: "^" + q, $options: "i"}
+    if (q) filter.company = {$regex: "^" + escapeRegex(q), $options: "i"}
     return WorkExperience.find(
         filter,
         {},
@@ -220,7 +221,7 @@ exports.getWorkExperiences = (email, q) => {
 
 exports.getProjectInformation = (email, q) => {
     let filter = {user: email};
-    if (q) filter.name = {$regex: "^" + q, $options: "i"}
+    if (q) filter.name = {$regex: "^" + escapeRegex(q), $options: "i"}
     return Project.find(
         filter,
         {},
@@ -241,7 +242,7 @@ exports.updateProjectInformation = async (projects, email) => {
                 _id: project._id
             },
             {
-                ...project
+                $set: sanitizeDocument({...project})
             },
             {
                 new: true,
@@ -255,7 +256,7 @@ exports.updateProjectInformation = async (projects, email) => {
 
 exports.getTrainingInformation = (email, q) => {
     let filter = {user: email};
-    if (q) filter.name = {$regex: "^" + q, $options: "i"}
+    if (q) filter.name = {$regex: "^" + escapeRegex(q), $options: "i"}
     return Training.find(
         filter,
         {},
@@ -276,7 +277,7 @@ exports.updateTrainingInformation = async (trainings, email) => {
                 _id: training._id
             },
             {
-                ...training
+                $set: sanitizeDocument({...training})
             },
             {
                 new: true,

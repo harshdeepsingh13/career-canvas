@@ -28,5 +28,5 @@ exports.getCoverLetter = async (skills, workExperiences, jobDescription, res) =>
             res.write(chat.text.replace(/\n\s?/, "<br/>"))
         }
     }
-    res.end();
+    return res.end();
 }
