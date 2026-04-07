@@ -120,7 +120,7 @@ exports.updateEducationInformation = async (email, educationInformation) => {
         if (education.type === 'graduation') education.priority = 1;
         if (education.type === 'seniorSecondary') education.priority = 2;
         if (education.type === 'secondary') education.priority = 3;
-        if (!education._id) education._id = new mongoose.Types.ObjectId();
+        // if (!education._id) education._id = new mongoose.Types.ObjectId();
         return education
     });
 
@@ -186,7 +186,7 @@ exports.updateWorkExperiences = async (workExperiences, email) => {
     const updated = [];
 
     for (let workExperience of workExperiences) {
-        if (!workExperience._id) workExperience._id = new mongoose.Types.ObjectId();
+        // if (!workExperience._id) workExperience._id = new mongoose.Types.ObjectId();
         const updatedRecord = await WorkExperience.findOneAndUpdate(
             {
                 user: email,
@@ -235,7 +235,7 @@ exports.updateProjectInformation = async (projects, email) => {
     const updated = [];
 
     for (let project of projects) {
-        if (!project._id) project._id = new mongoose.Types.ObjectId();
+        // if (!project._id) project._id = new mongoose.Types.ObjectId();
         const updatedRecord = await Project.findOneAndUpdate(
             {
                 user: email,
@@ -270,7 +270,7 @@ exports.updateTrainingInformation = async (trainings, email) => {
     const updated = [];
 
     for (let training of trainings) {
-        if (!training._id) training._id = new mongoose.Types.ObjectId();
+        // if (!training._id) training._id = new mongoose.Types.ObjectId();
         const updatedRecord = await Training.findOneAndUpdate(
             {
                 user: email,
