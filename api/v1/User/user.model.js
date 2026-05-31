@@ -32,7 +32,8 @@ const educationInformationProjection = {
 };
 const skillInformationProjection = {
     _id: 0,
-    skills: 1
+    skills: 1,
+    skillCategories: 1,
 };
 const workExperienceProjection = {
     _id: 0,
@@ -148,10 +149,10 @@ exports.getEducationInformation = async (email, q) => {
     return {educationInformation: {educations: [...educationInformation]}};
 };
 
-exports.updateSkillInformation = (skills, email) =>
+exports.updateSkillInformation = (skillCategories, email) =>
     Skill.findOneAndUpdate(
         {user: email},
-        {skills},
+        {skillCategories},
         {new: true, upsert: true}
     )
 

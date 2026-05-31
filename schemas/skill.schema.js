@@ -7,7 +7,17 @@ module.exports = mongoose.Schema(
             required: true,
             index: true
         },
-        skills: Array
+        skills: Array,
+        skillCategories: {
+            type: [
+                {
+                    category: { type: String },
+                    description: { type: String },
+                    skills: [String],
+                },
+            ],
+            default: [],
+        },
     },
     {
         timestamps: true

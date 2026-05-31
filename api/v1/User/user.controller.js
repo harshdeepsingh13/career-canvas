@@ -222,9 +222,8 @@ exports.getEducationInformationController = async (req, res, next) => {
 
 exports.updateSkillInformationController = async (req, res, next) => {
   try {
-    const { skills } = req.body;
-    console.log("skills", skills);
-    const updated = await updateSkillInformation(skills, req.user.email);
+    const { skillCategories } = req.body;
+    const updated = await updateSkillInformation(skillCategories, req.user.email);
     res.status(200).json({
       status: 200,
       message: "Skills updated successfully",
@@ -245,7 +244,7 @@ exports.getSkillInformationController = async (req, res, next) => {
     res.status(200).json({
       status: 200,
       message: "data successfully retrieved",
-      data: skills?.skills || [],
+      data: { skillCategories: skills?.skillCategories || [] },
     });
   } catch (e) {
     console.log("e", e);
