@@ -19,6 +19,7 @@ const Register = props => {
     const [rePassword, setRePassword] = useState(undefined);
     const [phoneNumber, setPhoneNumber] = useState(undefined);
     const [countryCode, setCountryCode] = useState(1);
+    const [registrationCode, setRegistrationCode] = useState('');
     const [emptyFieldsValidation, setEmptyFieldsValidation] = useState([])
 
     const {state: userState, actions: userActions, loaders: userLoaders} = useUserContext();
@@ -68,7 +69,7 @@ const Register = props => {
     }
 
     const onRegisterClick = async () => {
-        const data = {name, email, password, contactNumber: {countryCode, contactNumber: phoneNumber}}
+        const data = {name, email, password, contactNumber: {countryCode, contactNumber: phoneNumber}, registrationSecret: registrationCode}
         if ((rePassword && validateRePassword(rePassword)?.isValid) && validateData(data)) {
             const successCallback = () => {
                 navigate(ROUTES.LOGIN);
@@ -155,6 +156,16 @@ const Register = props => {
                     value={rePassword}
                     onChange={value => setRePassword(value)}
                     validator={validateRePassword}
+                />
+
+                <InputV2
+                    type={"password"}
+                    id={"registration-code"}
+                    name={"registration-code"}
+                    placeholder={"Registration code"}
+                    label={"Registration Code"}
+                    value={registrationCode}
+                    onChange={value => setRegistrationCode(value)}
                 />
 
                 <InputV2
