@@ -80,8 +80,12 @@ exports.loginController = async (req, res, next) => {
 };
 
 exports.registerController = async (req, res, next) => {
-  const expectedSecret = process.env.REGISTRATION_SECRET;
-  if (!expectedSecret || req.body.registrationSecret !== expectedSecret) {
+  const crypto = require('crypto');
+  const expectedSecret = process.env.REGISTRATION_SECRET || '';
+  const providedSecret = String(req.body.registrationSecret || '');
+  const expectedHash = crypto.createHmac('sha256', 'cc-reg-check').update(expectedSecret).digest();
+  const providedHash = crypto.createHmac('sha256', 'cc-reg-check').update(providedSecret).digest();
+  if (!process.env.REGISTRATION_SECRET || !crypto.timingSafeEqual(expectedHash, providedHash)) {
     req.error = { status: 403, message: "Forbidden" };
     return next(new Error());
   }
