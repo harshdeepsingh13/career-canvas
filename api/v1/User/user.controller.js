@@ -80,6 +80,12 @@ exports.loginController = async (req, res, next) => {
 };
 
 exports.registerController = async (req, res, next) => {
+  const expectedSecret = process.env.REGISTRATION_SECRET;
+  if (!expectedSecret || req.body.registrationSecret !== expectedSecret) {
+    req.error = { status: 403, message: "Forbidden" };
+    return next(new Error());
+  }
+
   const { name, email, contactNumber } = req.body;
   let { password } = req.body;
 
