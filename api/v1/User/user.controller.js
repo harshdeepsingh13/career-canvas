@@ -1,3 +1,4 @@
+const crypto = require('crypto');
 const { getToken } = require("../../../services/jwt.service");
 const { comparePassword, encryptPassword } = require("../../../services/password.service");
 const {
@@ -80,12 +81,13 @@ exports.loginController = async (req, res, next) => {
 };
 
 exports.registerController = async (req, res, next) => {
-  const crypto = require('crypto');
-  const expectedSecret = process.env.REGISTRATION_SECRET || '';
-  const providedSecret = String(req.body.registrationSecret || '');
-  const expectedHash = crypto.createHmac('sha256', 'cc-reg-check').update(expectedSecret).digest();
-  const providedHash = crypto.createHmac('sha256', 'cc-reg-check').update(providedSecret).digest();
-  if (!process.env.REGISTRATION_SECRET || !crypto.timingSafeEqual(expectedHash, providedHash)) {
+  if (!process.env.REGISTRATION_SECRET) {
+    req.error = { status: 403, message: "Forbidden" };
+    return next(new Error());
+  }
+  const expectedHash = crypto.createHmac('sha256', 'cc-reg-check').update(process.env.REGISTRATION_SECRET).digest();
+  const providedHash = crypto.createHmac('sha256', 'cc-reg-check').update(String(req.body.registrationSecret || '')).digest();
+  if (!crypto.timingSafeEqual(expectedHash, providedHash)) {
     req.error = { status: 403, message: "Forbidden" };
     return next(new Error());
   }
