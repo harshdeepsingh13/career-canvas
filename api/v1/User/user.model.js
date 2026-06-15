@@ -127,7 +127,7 @@ exports.updateEducationInformation = async (email, educationInformation) => {
 
     for (let education of educationInformation) {
         const updatedRecord = await EducationDetail.findOneAndUpdate(
-            {user: email, _id: education._id},
+            {user: email, _id: education?._id || new mongoose.Types.ObjectId()},
             {$set: sanitizeDocument({...education})},
             {upsert: true, new: true}
         );
@@ -191,7 +191,7 @@ exports.updateWorkExperiences = async (workExperiences, email) => {
         const updatedRecord = await WorkExperience.findOneAndUpdate(
             {
                 user: email,
-                _id: workExperience._id
+                _id: workExperience?._id || new mongoose.Types.ObjectId()
             },
             {
                 $set: sanitizeDocument({...workExperience}),
@@ -240,7 +240,7 @@ exports.updateProjectInformation = async (projects, email) => {
         const updatedRecord = await Project.findOneAndUpdate(
             {
                 user: email,
-                _id: project._id
+                _id: project?._id || new mongoose.Types.ObjectId()
             },
             {
                 $set: sanitizeDocument({...project})
@@ -275,7 +275,7 @@ exports.updateTrainingInformation = async (trainings, email) => {
         const updatedRecord = await Training.findOneAndUpdate(
             {
                 user: email,
-                _id: training._id
+                _id: training?._id || new mongoose.Types.ObjectId()
             },
             {
                 $set: sanitizeDocument({...training})
